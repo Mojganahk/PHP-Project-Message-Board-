@@ -39,13 +39,6 @@ if (!isset($_SESSION['user'])) {
     $_SESSION['user'] = array();
 }
 
-$app->get('/', function() use ($app) {
-    $app->render('index.html.twig');
-});
-
-$app->get('/session', function() {
-    print_r($_SESSION);
-});
 
 
 //eventhandlers:
