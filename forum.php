@@ -11,10 +11,12 @@ require_once 'vendor/autoload.php';
 
 
 //-----------------------MEEKRO.com-----------------------------
-DB::$dbName = 'slimshop';
-DB::$user = 'slimshop';
+DB::$dbName = 'cp4809_forum';
+DB::$user = 'cp4809_forum';
 DB::$encoding = 'utf8';
-DB::$password = 'Is9TcSiAmZbOnKOR';
+DB::$password = '~F{Vssu~9IBN';
+
+//////////////////////////////////////////~F{Vssu~9IBN
 
 
 // Slim creation and setup
@@ -42,7 +44,9 @@ if (!isset($_SESSION['user'])) {
 
 
 //eventhandlers:
-
+$app->get('/', function() use ($app) {
+    echo "jjjjjjjjjjjjjjjjjj";
+});
 
 
 
