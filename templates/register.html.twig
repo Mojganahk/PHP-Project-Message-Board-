@@ -1,0 +1,35 @@
+{% extends "master.html.twig" %}
+
+{% block title %}Register{% endblock %}
+
+{% block headextra %}
+    <script>
+        $(document).ready(function () {
+            // respond to all events that may change the value of input
+            $('input[name=email]').bind('propertychange change click keyup input paste', function () {
+                // AJAX request
+                var email = $('input[name=email]').val();
+                $('#isTaken').load('/isemailregistered/' + email);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if errorList %}
+        <ul>
+            {% for error in errorList %}
+                <li>{{error}}</li>
+                {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        Name: <input type="text" name="name" value="{{v.name}}"><br>
+        Email: <input type="email" name="email" value="{{v.email}}"><span id="isTaken"></span><br>
+        Password: <input type="password" name="pass1"><br>
+        Password (repeated): <input type="password" name="pass2"><br>
+        <input type="submit" value="Register">
+    </form>
+
+{% endblock %}

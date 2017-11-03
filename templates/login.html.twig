@@ -1,0 +1,18 @@
+{% extends "master.html.twig" %}
+
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% if error %}
+    <p>Login invalid. Try again or <a href="/register">register</a>.</p>
+{% endif %}
+
+<form method="post">
+    Email: <input type="email" name="email"><br>
+    Password: <input type="password" name="pass"><br>
+    <input type="submit" value="Login">
+</form>
+
+{% endblock %}

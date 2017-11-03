@@ -1,15 +1,93 @@
 Nov 3,2017 - Friday:
 
 Mojgan :
-1. what have i done / not done sincce last scrum?
-2. what will i do from now until next scrum?
-3. where do i need help from my teammate, teacher, or internet?
+1. what have i done / not done since last scrum?
+seached user interface typical forum layout.
+creating database tables .
 
+2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
+3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)
 
 
 
 
 Lucas
-1. what have i done / not done sincce last scrum?
+1. what have i done / not done since last scrum?
+proposal prepration.
+seached user interface typical forum layout.
+creating database tables .
+
 2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
 3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)
+
+----------------------------------------------
+
+Nov 4,2017 - saturday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+seached user interface typical forum layout.
+creating database tables .
+
+2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
+3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+proposal prepration.
+seached user interface typical forum layout.
+creating database tables .
+
+2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
+3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)
+
+-----------------------------
+
+Nov 5,2017 - sunday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+seached user interface typical forum layout.
+creating database tables .
+
+2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
+3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+proposal prepration.
+seached user interface typical forum layout.
+creating database tables .
+
+2. what will i do from now until next scrum?
+creating database tables in myphpadmin.
+revising tables.
+
+3. where do i need help from my teammate, teacher, or internet?
+google-foreign key part(DB)

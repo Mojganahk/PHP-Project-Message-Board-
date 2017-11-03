@@ -48,6 +48,42 @@ $app->get('/', function() use ($app) {
     echo "jjjjjjjjjjjjjjjjjj";
 });
 
+//index
+$app->get('/index', function() use ($app) {
+    $app->render('index.html.twig');
+});
+
+//-------------------------------login Starts------------------------------------------
+$app->get('/login', function() use ($app) {
+    $app->render('login.html.twig');
+});
+
+$app->post('/login', function() use ($app) {
+    $email = $app->request()->post('email');
+    $pass = $app->request()->post('pass');
+    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
+    $error = false;
+    if (!$row) {
+        $error = true; // user not found
+    } else {
+        if ($row['password'] != $pass) {
+            $error = true; // password invalid
+        }
+    }
+    if ($error) {
+        $app->render('login.html.twig', array('error' => true));
+    } else {
+        unset($row['password']);
+        $_SESSION['user'] = $row;
+        $app->render('login_success.html.twig');
+    }
+});
+//-------------------------------login Ends------------------------------------------
+
+$app->get('/session', function() {
+    print_r($_SESSION);
+});
+
 
 
 require_once 'admin.php';

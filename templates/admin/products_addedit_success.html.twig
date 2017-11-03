@@ -1,0 +1,8 @@
+{% extends "master.html.twig" %}
+
+{% block title %}Product {% if isEditing %}update{% else %}add{% endif %}{% endblock %}
+
+{% block content %}    
+    <p>Product {% if isEditing %}updated{% else %}added{% endif %}.
+        <a href="/admin/products/list">Click to continue</a>.</p>
+{% endblock %}
