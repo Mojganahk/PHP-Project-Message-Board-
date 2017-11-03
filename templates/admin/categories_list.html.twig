@@ -1,0 +1,25 @@
+{% extends "master.html.twig" %}
+
+{% block title %}Products list{% endblock %}
+
+{% block content %}
+    <p><a href="/admin/products/add">Add product</a></p>
+    <table border="1">
+        <tr><th>#</th><th>name</th><th>description</th><th>price</th><th>image</th><th>actions</th></tr>
+    {% for p in list %}
+            <tr class="{% if loop.index is odd %}rowodd{% else %}roweven{% endif %}">
+                <td>{{loop.index}}</td>
+                <td>{{p.name}}</td>
+                <td>{{p.description}}</td>
+                <td>{{p.price}}</td>
+                <td><img src="{{p.imagePath}}" width="100"></td>
+                <td>
+                    <a href="/admin/products/delete/{{p.id}}">Delete</a>
+                    <a href="/admin/products/edit/{{p.id}}">Edit</a>
+                </td></tr>
+    {% else %}
+        <tr><td colspan="6">You have no products</td></tr>
+    {% endfor %}
+    </table>
+    
+{% endblock %}
