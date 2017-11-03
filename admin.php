@@ -7,6 +7,6 @@ if (false) {
 }
 
 // URL/event handlers go here
-$app->get('/admin/articles/list', function() use ($app) {
+$app->get('/admin/categories/list', function() use ($app) {
     echo "This is Moj";
 });

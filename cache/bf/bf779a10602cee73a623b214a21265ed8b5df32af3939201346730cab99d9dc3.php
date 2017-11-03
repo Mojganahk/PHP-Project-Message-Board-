@@ -41,6 +41,7 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
         $this->displayBlock('content', $context, $blocks);
         // line 13
         echo "        </div>
+        <div class=\"foot\">Footer</div>
     </body>
 </html>";
     }
@@ -69,7 +70,7 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
 
     public function getDebugInfo()
     {
-        return array (  60 => 12,  55 => 8,  49 => 7,  43 => 13,  41 => 12,  36 => 9,  34 => 8,  30 => 7,  22 => 1,);
+        return array (  61 => 12,  56 => 8,  50 => 7,  43 => 13,  41 => 12,  36 => 9,  34 => 8,  30 => 7,  22 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -95,6 +96,7 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
         <div id=\"centeredContent\">
             {% block content %} hello moj{% endblock %}
         </div>
+        <div class=\"foot\">Footer</div>
     </body>
 </html>", "master.html.twig", "C:\\xampp\\htdocs\\ipd10-project\\templates\\master.html.twig");
     }
