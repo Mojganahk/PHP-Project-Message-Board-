@@ -50,4 +50,7 @@ $app->get('/', function() use ($app) {
 
 
 
+require_once 'admin.php';
+
+
 $app->run();
