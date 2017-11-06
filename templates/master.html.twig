@@ -9,7 +9,15 @@
     </head>
     <body>
         <div id="centeredContent">
-            {% block content %} hello moj{% endblock %}
+          {% if userSession %}
+                <p>Hello {{ userSession.name }}, You are Logged in.
+                    You may <a href="/logout">logout</a></p>
+            {% else %}
+                <p>You're not logged in. You may <a href="/register">Register</a>
+                or <a href="/login">Login</a>.</p>
+            {% endif %}
+                
+            {% block content %}{% endblock %}
         </div>
         <div class="foot">Footer</div>
     </body>

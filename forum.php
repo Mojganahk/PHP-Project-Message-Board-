@@ -17,6 +17,27 @@ DB::$encoding = 'utf8';
 DB::$password = '~F{Vssu~9IBN';
 
 //////////////////////////////////////////~F{Vssu~9IBN
+DB::$error_handler = 'sql_error_handler';
+DB::$nonsql_error_handler = 'nonsql_error_handler';
+
+function sql_error_handler($params) {
+    global $app, $log;
+    $log->err("SQL Error: " . $params['error']);
+    $log->err(" in query: " . $params['query']);
+    http_response_code(500);
+    $app->render('error_internal.html.twig');
+    die;
+}
+
+function nonsql_error_handler($params) {
+    global $app, $log;
+    $log->err("SQL Error: " . $params['error']);
+    http_response_code(500);
+    $app->render('error_internal.html.twig');
+    die;
+}
+
+///--------------------------------------------------
 
 
 // Slim creation and setup
@@ -41,6 +62,8 @@ if (!isset($_SESSION['user'])) {
     $_SESSION['user'] = array();
 }
 
+$twig = $app->view()->getEnvironment();
+$twig->addGlobal('userSession', $_SESSION['user']);
 
 
 //eventhandlers:
@@ -58,7 +81,40 @@ $app->get('/session', function() {
     print_r($_SESSION);
 });
 
+//-------------------------------login Starts------------------------------------------
+$app->get('/login', function() use ($app) {
+    $app->render('login.html.twig');
+});
 
+$app->post('/login', function() use ($app) {
+    $email = $app->request()->post('email');
+    $pass = $app->request()->post('pass');
+    $row = DB::queryFirstRow("SELECT * FROM users WHERE email= %s", $email);
+    $error = false;
+    if (!$row) {
+        $error = true; // user not found
+    } else {
+        if ($row['password'] != $pass) {
+            $error = true; // password invalid
+        }
+    }
+    if ($error) {
+        $app->render('login.html.twig', array('error' => true));
+    } else {
+        unset($row['password']);
+        $_SESSION['user'] = $row;
+        $app->render('login_success.html.twig');
+    }
+});
+//-------------------------------login Ends------------------------------------------
+
+
+//-------------------------------logout starts------------------------------------------
+$app->get('/logout', function() use ($app) {
+    $_SESSION['user'] = array();
+    $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
+});
+//-------------------------------logout Ends------------------------------------------
 //------------------------------------Register starts-----------------------------------------
 $app->get('/register', function() use ($app) {
     $app->render('register.html.twig');
@@ -109,7 +165,7 @@ $app->post('/register', function() use ($app) {
     //    image verification
     $avatar = array();
       if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
-        $imageUser = $_FILES['imageUser'];
+        $avatar = $_FILES['imageUser'];
    // if (isset($_FILES['avatar'])) {
      //   $avatar = $_FILES['avatar'];
         if ($avatar['error'] != 0) {
@@ -145,8 +201,8 @@ $app->post('/register', function() use ($app) {
     } else { // 2. successful submission
         // import image
         if ($avatar) {
-            $imageUser = 'uploads/' . $avatar['name'];
-            if (!move_uploaded_file($avatar['tmp_name'], $imageUser)) {
+            $avatar = 'uploads/' . $avatar['name'];
+            if (!move_uploaded_file($avatar['tmp_name'], $avatar)) {
                 $log->err("Error moving uploaded file: " . print_r($avatar, true));
                 $app->render('internal_error.html.twig');
                 return;
@@ -169,40 +225,7 @@ $app->get('/isemailregistered/:email', function($email) use ($app) {
 });
 //-------------------------------email ends------------------------------------------
 //
-//-------------------------------login Starts------------------------------------------
-$app->get('/login', function() use ($app) {
-    $app->render('login.html.twig');
-});
 
-$app->post('/login', function() use ($app) {
-    $email = $app->request()->post('email');
-    $pass = $app->request()->post('pass');
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-    $error = false;
-    if (!$row) {
-        $error = true; // user not found
-    } else {
-        if ($row['password'] != $pass) {
-            $error = true; // password invalid
-        }
-    }
-    if ($error) {
-        $app->render('login.html.twig', array('error' => true));
-    } else {
-        unset($row['password']);
-        $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig');
-    }
-});
-//-------------------------------login Ends------------------------------------------
-
-
-//-------------------------------logout starts------------------------------------------
-$app->get('/logout', function() use ($app) {
-    $_SESSION['user'] = array();
-    $app->render('logout.html.twig');
-});
-//-------------------------------logout Ends------------------------------------------
 
 //--------------------------------Admin - categories-------------------------------
 $app->get('/admin/categories/list', function() use ($app) {
@@ -360,6 +383,107 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
 ));
 
 //--------------------------------------admin ends--------------------------------------
+
+//--------------------------------------Post starts--------------------------------------
+
+
+//
+//$app->get('/', function() use ($app) {
+//    $postList = array();
+//    if ($_SESSION['user']) {
+//        $postList = DB::query('SELECT * FROM posts WHERE authorId=%i', $_SESSION['user']['id']);
+//    }
+//    $app->render('index.html.twig', array('postList' => $postList));
+//});
+
+
+$app->get('/add', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    $app->render('post_addedit.html.twig');
+});
+
+$app->post('/add', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    
+    $title = $app->request()->post('title');
+//    $datePosted = $app->request()->post('datePosted');
+    $body = $app->request()->post('body');
+  //  $catId = $app->request()->post('catId');
+  
+    //
+    $values = array('title' => $title, 'body' => $body );//'catId' => $catId
+    
+    $errorList = array();
+    //
+    if (strlen($title) < 2 || strlen($title) > 50) {
+        $values['title'] = '';
+        array_push($errorList, "Task must be between 2 and 50 characters long");
+    }
+    
+   
+     if (strlen($body) < 2 || strlen($body) > 2000) {
+        $values['body'] = '';
+        array_push($errorList, "body must be between 2 and 50 characters long");
+    }
+    
+
+    if ($errorList) { // 3. failed submission
+        $app->render('post_addedit.html.twig', array(
+            'errorList' => $errorList,
+            'v' => $values));
+    } else { // 2. successful submission
+        // import image
+       
+        $values['authorId'] = $_SESSION['user']['id'];
+        DB::insert('posts', $values);
+        $app->render('post_addedit_success.html.twig');
+    }
+
+});
+
+
+$app->get('/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i",
+            $id, $_SESSION['user']['id']);
+    if (!$post) {
+        echo "Item not found"; // FIXME: 404, not found page
+        return;
+    }
+    $app->render('post_delete.html.twig', array('post' => $post));
+});
+
+$app->post('/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    $confirmed = $app->request()->post('confirmed');
+    if ($confirmed != 'true') {
+        echo 'error: confirmation missing'; // post: use template
+        return;
+    }
+    DB::delete('posts', "id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
+    if (DB::affectedRows() == 0) {
+        echo 'error: record not found'; // post: use template
+    } else {
+        $app->render('post_delete_success.html.twig');
+    }
+});
+
+
+
+
+//--------------------------------------Post ends--------------------------------------
 
 
 require_once 'admin.php';
