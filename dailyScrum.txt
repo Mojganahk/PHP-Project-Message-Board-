@@ -3,7 +3,8 @@ Nov 3,2017 - Friday:
 Mojgan :
 1. what have i done / not done since last scrum?
 seached user interface typical forum layout.
-creating database tables .
+creating database tables.
+implementing the registration code and sending data to database.
 
 2. what will i do from now until next scrum?
 creating database tables in myphpadmin.
@@ -66,8 +67,7 @@ Nov 5,2017 - sunday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-seached user interface typical forum layout.
-creating database tables .
+
 
 2. what will i do from now until next scrum?
 creating database tables in myphpadmin.
@@ -98,12 +98,14 @@ Nov 6,2017 - monday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+i implemented to add and edit post and the verifications.
 
 2. what will i do from now until next scrum?
-
+-I need to review the user interface and CSS part and try to merge it with master.html.
+-sending the data(to posts table) to database.
 
 3. where do i need help from my teammate, teacher, or internet?
+sending data to database in timestamp.
 
 
 
