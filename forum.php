@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
 
 //eventhandlers:
 $app->get('/', function() use ($app) {
-    echo "jjjjjjjjjjjjjjjjjj";
+    echo "jjjjjjjjjjjjjjjjjjaaaaa";
 });
 
 //index
@@ -169,7 +169,7 @@ $app->get('/admin/categories/delete/:id', function($id) use ($app) {
         $app->render('admin/not_found.html.twig');
         return;
     }
-    $app->render('admin/categories_delete.html.twig', array('p' => $categories));
+    $app->render('admin/categories_delete.html.twig', array('c' => $categories));
 });
 
 $app->post('/admin/categories/delete/:id', function($id) use ($app) {
@@ -235,13 +235,13 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
     $values = array('categoryName' => $categoryName, 'description' => $description);
     $errorList = array();
     //
-    if (strlen($categoryName) < 2 || strlen($categoryName) > 50) {
+    if (strlen($categoryName) < 2 || strlen($categoryName) > 20) {
         $values['categoryName'] = '';
-        array_push($errorList, "categoryName must be between 2 and 50 characters long");
+        array_push($errorList, "categoryName must be between 2 and 20 characters long");
     }
-    if (strlen($description) < 2 || strlen($description) > 1000) {
+    if (strlen($description) < 2 || strlen($description) > 100) {
         $values['description'] = '';
-        array_push($errorList, "Description must be between 2 and 1000 characters long");
+        array_push($errorList, "Description must be between 2 and 100 characters long");
     }
    
     $categoryImage = array();
@@ -252,7 +252,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
             array_push($errorList, "Error uploading file");
             $log->err("Error uploading file: " . print_r($categoryImage, true));
         } else {
-            if (strstr($categoryImage['categoryName'], '..')) {
+            if (strstr($categoryImage['name'], '..')) {
                 array_push($errorList, "Invalid file name");
                 $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($categoryImage, true));
             }
@@ -282,7 +282,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
             'v' => $values));
     } else { // 2. successful submission
         if ($categoryImage) {
-            $imagePath = 'uploads/' . $categoryImage['categoryName'];
+            $imagePath = 'uploads/' . $categoryImage['name'];
             if (!move_uploaded_file($categoryImage['tmp_name'], $imagePath)) {
                 $log->err("Error moving uploaded file: " . print_r($categoryImage, true));
                 $app->render('internal_error.html.twig');

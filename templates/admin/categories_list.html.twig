@@ -1,24 +1,23 @@
 {% extends "master.html.twig" %}
 
-{% block title %}Products list{% endblock %}
+{% block title %}Categories list{% endblock %}
 
 {% block content %}
-    <p><a href="/admin/products/add">Add product</a></p>
+    <p><a href="/admin/categories/add">Add category</a></p>
     <table border="1">
-        <tr><th>#</th><th>name</th><th>description</th><th>price</th><th>image</th><th>actions</th></tr>
-    {% for p in list %}
+        <tr><th>#</th><th>name</th><th>description</th><th>image</th><th>actions</th></tr>
+    {% for c in list %}
             <tr class="{% if loop.index is odd %}rowodd{% else %}roweven{% endif %}">
                 <td>{{loop.index}}</td>
-                <td>{{p.name}}</td>
-                <td>{{p.description}}</td>
-                <td>{{p.price}}</td>
-                <td><img src="{{p.imagePath}}" width="100"></td>
+                <td>{{c.categoryName}}</td>
+                <td>{{c.description}}</td>
+                <td><img src="{{c.imagePath}}" width="100" height="100"></td>
                 <td>
-                    <a href="/admin/products/delete/{{p.id}}">Delete</a>
-                    <a href="/admin/products/edit/{{p.id}}">Edit</a>
+                    <a href="/admin/categories/delete/{{c.id}}">Delete</a>
+                    <a href="/admin/categories/edit/{{c.id}}">Edit</a>
                 </td></tr>
     {% else %}
-        <tr><td colspan="6">You have no products</td></tr>
+        <tr><td colspan="6">You have no categories</td></tr>
     {% endfor %}
     </table>
     

@@ -1,6 +1,6 @@
 {% extends "master.html.twig" %}
 
-{% block title %}Product {% if isEditing %}edit{% else %}add{% endif %}{% endblock %}
+{% block title %}Category {% if isEditing %}edit{% else %}add{% endif %}{% endblock %}
 
 {% block content %}
     {% if errorList %}
@@ -13,11 +13,10 @@
 
      <form method="post" enctype="multipart/form-data">
          
-        Name: <input type="text" name="name" value="{{v.name}}"><br>
+        Name: <input type="text" name="categoryName" value="{{v.categoryName}}"><br>
         Description: <textarea name="description">{{v.description}}</textarea><br>
-        Price: <input type="number" min="0" max="999999" step="0.01" name="price" value="{{v.price}}"><br>
-        <input type="file" name="productImage" >
-        <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} product">
+        <input type="file" name="categoryImage" >
+        <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
     </form>
 
 {% endblock %}

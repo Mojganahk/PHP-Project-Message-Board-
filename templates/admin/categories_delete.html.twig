@@ -3,21 +3,20 @@
 {% block title %}Confirm delete{% endblock %}
 
 {% block content %}
-    <p><b>Are you sure you want to delete this product?</b></p>
-    <form action="/admin/products/list" style="display: inline;">
+    <p><b>Are you sure you want to delete this category?</b></p>
+    <form action="/admin/categories/list" style="display: inline;">
         <input type="submit" value="Cancel">
     </form>
     {# action not requried since we're already on URL looking like
-        action="/admin/products/delete/{{p.id}}" #}
+        action="/admin/categories/delete/{{c.id}}" #}
     <form method="post"  style="display: inline;">
         <input type="hidden" name="confirmed" value="true">
         <input type="submit" value="Delete">
     </form>
     <div>
-        <p>Name: {{p.name}}</p>
-        <p>Description: {{p.description}}</p>
-        <p>Name: {{p.price}}</p>
-        <img src="">
+        <p>Name: {{c.categoryName}}</p>
+        <p>Description: {{c.description}}</p>
+        <img src="{{c.imagePath}}" width="100" height="100">
     </div>
 
 

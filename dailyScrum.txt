@@ -91,3 +91,411 @@ revising tables.
 
 3. where do i need help from my teammate, teacher, or internet?
 google-foreign key part(DB)
+
+----------------------------------
+
+Nov 6,2017 - monday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+remote connection not done.
+I implemented the CRUD functions for the user "admin" in the categories section. 
+
+2. what will i do from now until next scrum?
+I will start the implementation of posts (CRUD).
+
+3. where do i need help from my teammate, teacher, or internet?
+how to set a remote connection on a netbeans project.
+
+---------------------------------
+
+Nov 7,2017 - tuesday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 8,2017 - wednesday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 9,2017 - thursday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 10,2017 - friday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 11,2017 - saturday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 12,2017 - sunday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 13,2017 - monday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 14,2017 - tuesday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 15,2017 - wednesday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 16,2017 - thursday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 17,2017 - friday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 18,2017 - saturday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 19,2017 - sunday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
+
+Nov 20,2017 - monday
+
+Mojgan :
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+
+
+
+Lucas
+1. what have i done / not done since last scrum?
+
+
+2. what will i do from now until next scrum?
+
+
+3. where do i need help from my teammate, teacher, or internet?
+
+
+---------------------------------
