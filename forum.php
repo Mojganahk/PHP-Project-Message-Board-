@@ -9,7 +9,6 @@ session_start();
 require_once 'vendor/autoload.php';
 
 // lucas
-
 //-----------------------MEEKRO.com-----------------------------
 DB::$dbName = 'cp4809_forum';
 DB::$user = 'cp4809_forum';
@@ -17,8 +16,6 @@ DB::$encoding = 'utf8';
 DB::$password = '~F{Vssu~9IBN';
 
 //////////////////////////////////////////~F{Vssu~9IBN
-
-
 // Slim creation and setup
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
@@ -69,8 +66,9 @@ $app->post('/register', function() use ($app) {
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
+    $imageUser = $app->request()->post('imageUser');
     //
-    $values = array('name' => $name, 'email' => $email);
+    $values = array('name' => $name, 'email' => $email, 'imageUser' => $imageUser);
     $errorList = array();
     //
     if (strlen($name) < 2 || strlen($name) > 50) {
@@ -94,34 +92,20 @@ $app->post('/register', function() use ($app) {
             array_push($errorList, "Password must be between 2 and 50 characters long");
         }
     }
-    //
-    if ($errorList) { // 3. failed submission
-        $app->render('register.html.twig', array(
-            'errorList' => $errorList,
-            'v' => $values));
-    } else { // 2. successful submission
-          $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc));
-        $app->render('register_success.html.twig');
-    }
-    
-    ///////-------------------------avatar (registration)--------------------------
-    //    image verification
-    $avatar = array();
-      if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
+
+    // avatar verification
+    if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
         $imageUser = $_FILES['imageUser'];
-   // if (isset($_FILES['avatar'])) {
-     //   $avatar = $_FILES['avatar'];
-        if ($avatar['error'] != 0) {
+        if ($imageUser['error'] != 0) {
             array_push($errorList, "Error uploading file");
-            $log->err("Error uploading file: " . print_r($avatar, true));
+            $log->err("Error uploading file: " . print_r($imageUser, true));
         } else {
-            if (strstr($avatar['name'], '..')) {
+            if (strstr($imageUser['name'], '..')) {
                 array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($avatar, true));
+                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($imageUser, true));
             }
             // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
-            $info = getimagesize($avatar["tmp_name"]);
+            $info = getimagesize($imageUser["tmp_name"]);
             if ($info == FALSE) {
                 array_push($errorList, "File doesn't look like a valid image");
             } else {
@@ -133,33 +117,32 @@ $app->post('/register', function() use ($app) {
             }
         }
     } else { // no file uploaded
-        if ($op == 'add') {
-            array_push($errorList, "Profile Picture is required for registration");
+        if ($app == '/register') {
+            array_push($errorList, "Image is required when creating a new member");
         }
     }
-//// //end image
+    //
     if ($errorList) { // 3. failed submission
         $app->render('register.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
     } else { // 2. successful submission
-        // import image
-        if ($avatar) {
-            $imageUser = 'uploads/' . $avatar['name'];
-            if (!move_uploaded_file($avatar['tmp_name'], $imageUser)) {
-                $log->err("Error moving uploaded file: " . print_r($avatar, true));
+        if ($imageUser) {
+            $imagePath = 'uploads/' . $imageUser['name'];
+            if (!move_uploaded_file($imageUser['tmp_name'], $imagePath)) {
+                $log->err("Error moving uploaded file: " . print_r($imageUser, true));
                 $app->render('internal_error.html.twig');
                 return;
             }
             // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $values['imageUser'] = "/" . $imageUser;
-        } /// end import image
-        $values['id'] = $_SESSION['user']['id'];
-        DB::insert('users', $values);
+            $values['imageUser'] = "/" . $imagePath;
+        }
+//        $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
+        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $pass1, 'imageUser' => $imagePath));
         $app->render('register_success.html.twig');
     }
-
 });
+
 //----------------------------------register ends----------------------------------------------
 //
 //-------------------------------this Email registered alreardy------------------------------------------
@@ -194,16 +177,14 @@ $app->post('/login', function() use ($app) {
         $app->render('login_success.html.twig');
     }
 });
+
 //-------------------------------login Ends------------------------------------------
-
-
 //-------------------------------logout starts------------------------------------------
 $app->get('/logout', function() use ($app) {
     $_SESSION['user'] = array();
     $app->render('logout.html.twig');
 });
 //-------------------------------logout Ends------------------------------------------
-
 //--------------------------------Admin - categories-------------------------------
 $app->get('/admin/categories/list', function() use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
@@ -286,7 +267,8 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
     //
     $categoryName = $app->request()->post('categoryName');
     $description = $app->request()->post('description');
-    
+    $categoryImage = $app->request()->post('categoryImage');
+
     //
     $values = array('categoryName' => $categoryName, 'description' => $description);
     $errorList = array();
@@ -299,7 +281,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
         $values['description'] = '';
         array_push($errorList, "Description must be between 2 and 100 characters long");
     }
-   
+
     $categoryImage = array();
     ///////////////////
     if ($_FILES['categoryImage']['error'] != UPLOAD_ERR_NO_FILE) {
