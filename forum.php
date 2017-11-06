@@ -100,9 +100,65 @@ $app->post('/register', function() use ($app) {
             'errorList' => $errorList,
             'v' => $values));
     } else { // 2. successful submission
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $pass1));
+          $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
+        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc));
         $app->render('register_success.html.twig');
     }
+    
+    ///////-------------------------avatar (registration)--------------------------
+    //    image verification
+    $avatar = array();
+      if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
+        $imageUser = $_FILES['imageUser'];
+   // if (isset($_FILES['avatar'])) {
+     //   $avatar = $_FILES['avatar'];
+        if ($avatar['error'] != 0) {
+            array_push($errorList, "Error uploading file");
+            $log->err("Error uploading file: " . print_r($avatar, true));
+        } else {
+            if (strstr($avatar['name'], '..')) {
+                array_push($errorList, "Invalid file name");
+                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($avatar, true));
+            }
+            // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
+            $info = getimagesize($avatar["tmp_name"]);
+            if ($info == FALSE) {
+                array_push($errorList, "File doesn't look like a valid image");
+            } else {
+                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/gif' || $info['mime'] == 'image/png') {
+                    // image type is valid - all good
+                } else {
+                    array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
+                }
+            }
+        }
+    } else { // no file uploaded
+        if ($op == 'add') {
+            array_push($errorList, "Profile Picture is required for registration");
+        }
+    }
+//// //end image
+    if ($errorList) { // 3. failed submission
+        $app->render('register.html.twig', array(
+            'errorList' => $errorList,
+            'v' => $values));
+    } else { // 2. successful submission
+        // import image
+        if ($avatar) {
+            $imageUser = 'uploads/' . $avatar['name'];
+            if (!move_uploaded_file($avatar['tmp_name'], $imageUser)) {
+                $log->err("Error moving uploaded file: " . print_r($avatar, true));
+                $app->render('internal_error.html.twig');
+                return;
+            }
+            // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
+            $values['imageUser'] = "/" . $imageUser;
+        } /// end import image
+        $values['id'] = $_SESSION['user']['id'];
+        DB::insert('users', $values);
+        $app->render('register_success.html.twig');
+    }
+
 });
 //----------------------------------register ends----------------------------------------------
 //
