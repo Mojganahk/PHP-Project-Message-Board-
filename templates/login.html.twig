@@ -13,14 +13,13 @@
     <p>Login invalid. Try again or <a href="/register">register</a>.</p>   
 {% endif %}
 
-<!---
+<!--
 <form method="post">
     Email: <input type="email" name="email"><br>
     Password: <input type="password" name="pass"><br>
     <input type="submit" value="Login">
 </form>
 -->
-
 
 
 <div class="main">
@@ -39,7 +38,7 @@
               <div class="col-sm-5 col-sm-offset-1 mb-sm-40">
                 <h4 class="font-alt">Login</h4>
                 <hr class="divider-w mb-10">
-                <form class="form">
+                <form class="form" method="post">
                   <div class="form-group">
                     <input class="form-control" id="email" type="email" name="email" placeholder="email"/>
                   </div>
@@ -82,6 +81,3 @@
  </div>
 
 {% endblock %}
- {% block bodyTest %}
-         <p> body comes from login</p>
-    {% endblock %}

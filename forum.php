@@ -39,11 +39,11 @@ function nonsql_error_handler($params) {
 }
 
 
-<<<<<<< HEAD
-//------------------------------------------------
-=======
 
->>>>>>> d89626a055974e9c6e7434bb472a5af6bf0eb77a
+//------------------------------------------------
+
+
+
 // Slim creation and setup
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
