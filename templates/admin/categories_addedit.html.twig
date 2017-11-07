@@ -15,8 +15,9 @@
          
         Name: <input type="text" name="categoryName" value="{{v.categoryName}}"><br>
         Description: <textarea name="description">{{v.description}}</textarea><br>
-        <input type="file" name="categoryImage" >
+        <input type="file" name="categoryImage"><br>
         <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
+        <input type="submit" value="Cancel">
     </form>
 
 {% endblock %}
