@@ -98,14 +98,15 @@ Nov 6,2017 - monday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-i implemented to add and edit post and the verifications.
+implemented to add and edit post and the verifications.
 
 2. what will i do from now until next scrum?
 -I need to review the user interface and CSS part and try to merge it with master.html.
 -sending the data(to posts table) to database.
 
+
 3. where do i need help from my teammate, teacher, or internet?
-sending data to database in timestamp.
+sending data to database in timestamp.fixing bootstrap.
 
 
 
@@ -128,13 +129,14 @@ Nov 7,2017 - tuesday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+imported the bootstrap to the master.html.twig
+get the password forgotten worked.
 
 2. what will i do from now until next scrum?
-
+the other urls need to be fixed according to master.html.twig.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+google to fix the master and other pages.
 
 
 
