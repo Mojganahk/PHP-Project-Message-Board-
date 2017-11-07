@@ -16,8 +16,8 @@ DB::$encoding = 'utf8';
 DB::$password = '~F{Vssu~9IBN';
 
 //////////////////////////////////////////~F{Vssu~9IBN
-<<<<<<< HEAD
-=======
+
+
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
 
@@ -41,7 +41,7 @@ function nonsql_error_handler($params) {
 ///--------------------------------------------------
 
 
->>>>>>> c1b123632b2127ce755e83f8bfd955c86f0cccfe
+
 // Slim creation and setup
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
@@ -127,9 +127,9 @@ $app->post('/register', function() use ($app) {
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
-    $imageUser = $app->request()->post('imageUser');
+    
     //
-    $values = array('name' => $name, 'email' => $email, 'imageUser' => $imageUser);
+    $values = array('name' => $name, 'email' => $email);
     $errorList = array();
     //
     if (strlen($name) < 2 || strlen($name) > 50) {
@@ -153,33 +153,11 @@ $app->post('/register', function() use ($app) {
             array_push($errorList, "Password must be between 2 and 50 characters long");
         }
     }
-<<<<<<< HEAD
-
-    // avatar verification
-    if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
+    //    image verification
+    $imageUser = array();
+      if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
         $imageUser = $_FILES['imageUser'];
         if ($imageUser['error'] != 0) {
-=======
-    //
-    if ($errorList) { // 3. failed submission
-        $app->render('register.html.twig', array(
-            'errorList' => $errorList,
-            'v' => $values));
-    } else { // 2. successful submission
-          $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc));
-        $app->render('register_success.html.twig');
-    }
-    
-    ///////-------------------------avatar (registration)--------------------------
-    //    image verification
-    $avatar = array();
-      if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
-        $avatar = $_FILES['imageUser'];
-   // if (isset($_FILES['avatar'])) {
-     //   $avatar = $_FILES['avatar'];
-        if ($avatar['error'] != 0) {
->>>>>>> c1b123632b2127ce755e83f8bfd955c86f0cccfe
             array_push($errorList, "Error uploading file");
             $log->err("Error uploading file: " . print_r($imageUser, true));
         } else {
@@ -210,26 +188,19 @@ $app->post('/register', function() use ($app) {
             'errorList' => $errorList,
             'v' => $values));
     } else { // 2. successful submission
-<<<<<<< HEAD
         if ($imageUser) {
-            $imagePath = 'uploads/' . $imageUser['name'];
-            if (!move_uploaded_file($imageUser['tmp_name'], $imagePath)) {
+            $avatar = 'uploads/' . $imageUser['name'];
+            if (!move_uploaded_file($imageUser['tmp_name'], $avatar)) {
                 $log->err("Error moving uploaded file: " . print_r($imageUser, true));
-=======
-        // import image
-        if ($avatar) {
-            $avatar = 'uploads/' . $avatar['name'];
-            if (!move_uploaded_file($avatar['tmp_name'], $avatar)) {
-                $log->err("Error moving uploaded file: " . print_r($avatar, true));
->>>>>>> c1b123632b2127ce755e83f8bfd955c86f0cccfe
                 $app->render('internal_error.html.twig');
                 return;
+        // import image
             }
             // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $values['imageUser'] = "/" . $imagePath;
+            $values['avatar'] = "/" . $avatar;
         }
-//        $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $pass1, 'imageUser' => $imagePath));
+        $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
+        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc, 'avatar' => $avatar));
         $app->render('register_success.html.twig');
     }
 });
@@ -243,7 +214,6 @@ $app->get('/isemailregistered/:email', function($email) use ($app) {
 });
 //-------------------------------email ends------------------------------------------
 //
-<<<<<<< HEAD
 //-------------------------------login Starts------------------------------------------
 $app->get('/login', function() use ($app) {
     $app->render('login.html.twig');
@@ -277,10 +247,9 @@ $app->get('/logout', function() use ($app) {
     $app->render('logout.html.twig');
 });
 //-------------------------------logout Ends------------------------------------------
-=======
 
 
->>>>>>> c1b123632b2127ce755e83f8bfd955c86f0cccfe
+
 //--------------------------------Admin - categories-------------------------------
 $app->get('/admin/categories/list', function() use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
@@ -291,7 +260,6 @@ $app->get('/admin/categories/list', function() use ($app) {
     $categoriesList = DB::query("SELECT * FROM categories");
     $app->render('admin/categories_list.html.twig', array('list' => $categoriesList));
 });
-
 $app->get('/admin/categories/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
         $app->render('access_denied.html.twig');
@@ -304,7 +272,6 @@ $app->get('/admin/categories/delete/:id', function($id) use ($app) {
     }
     $app->render('admin/categories_delete.html.twig', array('c' => $categories));
 });
-
 $app->post('/admin/categories/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
         $app->render('access_denied.html.twig');
@@ -322,7 +289,6 @@ $app->post('/admin/categories/delete/:id', function($id) use ($app) {
         $app->render('admin/categories_delete_success.html.twig');
     }
 });
-
 $app->get('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
         $app->render('access_denied.html.twig');
@@ -363,8 +329,6 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
     //
     $categoryName = $app->request()->post('categoryName');
     $description = $app->request()->post('description');
-    $categoryImage = $app->request()->post('categoryImage');
-
     //
     $values = array('categoryName' => $categoryName, 'description' => $description);
     $errorList = array();
@@ -377,7 +341,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
         $values['description'] = '';
         array_push($errorList, "Description must be between 2 and 100 characters long");
     }
-
+   
     $categoryImage = array();
     ///////////////////
     if ($_FILES['categoryImage']['error'] != UPLOAD_ERR_NO_FILE) {
@@ -407,7 +371,6 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
             array_push($errorList, "Image is required when creating new category");
         }
     }
-
     //
     if ($errorList) { // 3. failed submission
         $app->render('admin/categories_addedit.html.twig', array(
