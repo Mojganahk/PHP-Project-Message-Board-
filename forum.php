@@ -38,16 +38,7 @@ function nonsql_error_handler($params) {
     die;
 }
 
-
-
-
 //------------------------------------------------
-
-
-
-
-
-
 // Slim creation and setup
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
@@ -115,8 +106,6 @@ $app->post('/login', function() use ($app) {
     }
 });
 //-------------------------------login Ends------------------------------------------
-
-
 //-------------------------------logout starts------------------------------------------
 $app->get('/logout', function() use ($app) {
     $_SESSION['user'] = array();
@@ -133,7 +122,7 @@ $app->post('/register', function() use ($app) {
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
-    
+
     //
     $values = array('name' => $name, 'email' => $email);
     $errorList = array();
@@ -160,19 +149,20 @@ $app->post('/register', function() use ($app) {
         }
     }
     //    image verification
-    $imageUser = array();
-      if ($_FILES['imageUser']['error'] != UPLOAD_ERR_NO_FILE) {
-        $imageUser = $_FILES['imageUser'];
-        if ($imageUser['error'] != 0) {
+    $avatar = array();
+    if ($_FILES['avatar']['error'] != UPLOAD_ERR_NO_FILE) {
+        print_r($_FILES);
+        $avatar = $_FILES['avatar'];
+        if ($avatar['error'] != 0) {
             array_push($errorList, "Error uploading file");
-            $log->err("Error uploading file: " . print_r($imageUser, true));
+            $log->err("Error uploading file: " . print_r($avatar, true));
         } else {
-            if (strstr($imageUser['name'], '..')) {
+            if (strstr($avatar['name'], '..')) {
                 array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($imageUser, true));
+                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($avatar, true));
             }
             // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
-            $info = getimagesize($imageUser["tmp_name"]);
+            $info = getimagesize($avatar["tmp_name"]);
             if ($info == FALSE) {
                 array_push($errorList, "File doesn't look like a valid image");
             } else {
@@ -183,10 +173,8 @@ $app->post('/register', function() use ($app) {
                 }
             }
         }
-    } else { // no file uploaded
-        if ($app == '/register') {
-            array_push($errorList, "Image is required when creating a new member");
-        }
+    } else { // no file uploaded        
+        array_push($errorList, "Image is required when creating a new member");
     }
     //
     if ($errorList) { // 3. failed submission
@@ -194,19 +182,19 @@ $app->post('/register', function() use ($app) {
             'errorList' => $errorList,
             'v' => $values));
     } else { // 2. successful submission
-        if ($imageUser) {
-            $avatar = 'uploads/' . $imageUser['name'];
-            if (!move_uploaded_file($imageUser['tmp_name'], $avatar)) {
-                $log->err("Error moving uploaded file: " . print_r($imageUser, true));
+        if ($avatar) {
+            $avatarPath = 'uploads/' . $avatar['name'];
+            if (!move_uploaded_file($avatar['tmp_name'], $avatarPath)) {
+                $log->err("Error moving uploaded file: " . print_r($avatar, true));
                 $app->render('internal_error.html.twig');
                 return;
-        // import image
+                // import image
             }
             // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $values['avatar'] = "/" . $avatar;
+            $avatarPath = "/" . $avatarPath;
         }
         $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc, 'avatar' => $avatar));
+        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc, 'avatarPath' => $avatarPath));
         $app->render('register_success.html.twig');
     }
 });
@@ -253,9 +241,6 @@ $app->get('/logout', function() use ($app) {
     $app->render('logout.html.twig');
 });
 //-------------------------------logout Ends------------------------------------------
-
-
-
 //--------------------------------Admin - categories-------------------------------
 $app->get('/admin/categories/list', function() use ($app) {
     if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
@@ -347,7 +332,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
         $values['description'] = '';
         array_push($errorList, "Description must be between 2 and 100 characters long");
     }
-   
+
     $categoryImage = array();
     ///////////////////
     if ($_FILES['categoryImage']['error'] != UPLOAD_ERR_NO_FILE) {
@@ -407,10 +392,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
 ));
 
 //--------------------------------------admin ends--------------------------------------
-
 //--------------------------------------Post starts--------------------------------------
-
-
 //
 //$app->get('/', function() use ($app) {
 //    $postList = array();
@@ -434,28 +416,27 @@ $app->post('/add', function() use ($app) {
         $app->render('access_denied.html.twig');
         return;
     }
-    
+
     $title = $app->request()->post('title');
 //    $datePosted = $app->request()->post('datePosted');
     $body = $app->request()->post('body');
-  //  $catId = $app->request()->post('catId');
-  
+    //  $catId = $app->request()->post('catId');
     //
-    $values = array('title' => $title, 'body' => $body );//'catId' => $catId
-    
+    $values = array('title' => $title, 'body' => $body); //'catId' => $catId
+
     $errorList = array();
     //
     if (strlen($title) < 2 || strlen($title) > 50) {
         $values['title'] = '';
         array_push($errorList, "Task must be between 2 and 50 characters long");
     }
-    
-   
-     if (strlen($body) < 2 || strlen($body) > 2000) {
+
+
+    if (strlen($body) < 2 || strlen($body) > 2000) {
         $values['body'] = '';
         array_push($errorList, "body must be between 2 and 50 characters long");
     }
-    
+
 
     if ($errorList) { // 3. failed submission
         $app->render('post_addedit.html.twig', array(
@@ -463,12 +444,10 @@ $app->post('/add', function() use ($app) {
             'v' => $values));
     } else { // 2. successful submission
         // import image
-       
         $values['authorId'] = $_SESSION['user']['id'];
         DB::insert('posts', $values);
         $app->render('post_addedit_success.html.twig');
     }
-
 });
 
 
@@ -477,8 +456,7 @@ $app->get('/delete/:id', function($id) use ($app) {
         $app->render('access_denied.html.twig');
         return;
     }
-    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i",
-            $id, $_SESSION['user']['id']);
+    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
     if (!$post) {
         echo "Item not found"; // FIXME: 404, not found page
         return;

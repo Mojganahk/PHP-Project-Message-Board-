@@ -108,6 +108,7 @@ $app->map('/passreset/token/:secretToken', function($secretToken) use ($app, $lo
     }
 })->via('GET', 'POST');
 
+/*
 $app->get('/logout', function() use ($app) {
     $_SESSION['user'] = array();
     $app->render('logout.html.twig');
@@ -188,3 +189,5 @@ $app->post('/register', function() use ($app) {
         $app->render('register_success.html.twig');
     }
 });
+
+*/
