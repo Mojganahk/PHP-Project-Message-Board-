@@ -1,0 +1,20 @@
+{% extends "master.html.twig" %}
+
+
+{% block title %}Forgotten Password{% endblock %}
+
+{% block content %}
+
+    <p>Enter Your Email Below and We will Send you reset Link</p>
+    
+       
+    {% if error %}
+        <p>We weren't able to find email you provided in our records.
+            Try again or <a href="/register">register</a> a new account.
+    {% endif %}
+<form method="post">
+    Email: <input type="email" name="email"><br>
+       <input type="submit" value="Request Reset Email">
+</form>
+
+{% endblock %}

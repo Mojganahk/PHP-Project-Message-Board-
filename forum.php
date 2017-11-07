@@ -37,9 +37,8 @@ function nonsql_error_handler($params) {
     die;
 }
 
-///--------------------------------------------------
 
-
+//------------------------------------------------
 // Slim creation and setup
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
@@ -484,6 +483,9 @@ $app->post('/delete/:id', function($id) use ($app) {
 
 
 //--------------------------------------Post ends--------------------------------------
+
+require_once 'account.php';
+
 
 
 require_once 'admin.php';
