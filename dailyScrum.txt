@@ -131,6 +131,8 @@ Mojgan :
 1. what have i done / not done since last scrum?
 imported the bootstrap to the master.html.twig
 get the password forgotten worked.
+I tried to understand the corrections prof did .
+manipulating the CSS
 
 2. what will i do from now until next scrum?
 the other urls need to be fixed according to master.html.twig.
@@ -157,13 +159,14 @@ Nov 8,2017 - wednesday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+finishing register and login pages with the functions tested.
 
 2. what will i do from now until next scrum?
-
+create the user interface from scratch.
+trying to get the pagination worked for the posts.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+according to Prof's code.
 
 
 
