@@ -41,12 +41,7 @@
         <title>{% block title %}Default{% endblock %}</title>
 
     </head>
-
-<body>
-    <div class="page-loader">
-        <div class="loader">Loading...</div>
-    </div>
-    {% block navbar %}
+{% block navbar %}
         <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -75,8 +70,20 @@
             </div>
         </nav>
     {% endblock %}
-    
-        <div >
+<body>
+    <div class="page-loader">
+        <div class="loader">Loading...</div> 
+        
+    </div>
+  
+{% block content %}
+
+<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">
+    <div class="main">
+
+
+      {% block UserIDentification %}
+       
             {% if userSession %}
                 <p>Hello {{ userSession.name }}, You are Logged in.
                     You may <a href="/logout">logout</a></p>
@@ -84,24 +91,15 @@
                 <p>You're not logged in. You may <a href="/register">Register</a>
                     or <a href="/login">Login</a>.</p>
                 {% endif %}
-        </div>
-{% block content %}
-
-<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">
-    
-</section>
-    <div class="main">
-
-        <hr class="divider-w">
-
-        <section class="module" id="services">
-           
-        </section>
+        
+    {% endblock %}
 
 
-        <hr class="divider-w">
+
 
     </div>
+    
+</section>
     
       
 {% endblock %}

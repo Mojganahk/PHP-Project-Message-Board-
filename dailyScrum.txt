@@ -159,10 +159,11 @@ Nov 8,2017 - wednesday
 
 Mojgan :
 1. what have i done / not done since last scrum?
+forgot password and the request for new password through the link .
 finishing register and login pages with the functions tested.
 
 2. what will i do from now until next scrum?
-create the user interface from scratch.
+create the user interface from scratch.(login and register page's been done)
 trying to get the pagination worked for the posts.
 
 3. where do i need help from my teammate, teacher, or internet?
@@ -187,13 +188,12 @@ Nov 9,2017 - thursday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+tried to figure out the post pagination.
 
 2. what will i do from now until next scrum?
 
-
 3. where do i need help from my teammate, teacher, or internet?
-
+according to Prof's code.
 
 
 
