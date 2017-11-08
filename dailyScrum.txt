@@ -145,13 +145,13 @@ google to fix the master and other pages.
 
 Lucas
 1. what have i done / not done since last scrum?
-
+modified the register for the member to be able to log in and upload an avatar to the uploads folder
 
 2. what will i do from now until next scrum?
-
+create regular expressions for the  user name. 
 
 3. where do i need help from my teammate, teacher, or internet?
-
+I needed help on how to upload the avatar on the uploads folder (greg helped). 
 
 ---------------------------------
 
@@ -173,13 +173,13 @@ according to Prof's code.
 
 Lucas
 1. what have i done / not done since last scrum?
-
+revise the latest projects and last quiz so I could implement some similar parts on our project. 
 
 2. what will i do from now until next scrum?
-
+start with the users posts section and adapt the css.  
 
 3. where do i need help from my teammate, teacher, or internet?
-
+creating a responsive layout for the project.
 
 ---------------------------------
 
