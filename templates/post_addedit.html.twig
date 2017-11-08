@@ -1,18 +1,25 @@
 {% extends "master.html.twig" %}
 
-{% block title %}Add post{% endblock %}
-
+{% block title %}New Post{% endblock %}
+{#  {% block headextra %} 
+  <script type="text/javascript">
+  $("#isDone").val("<?php echo $_POST['isDone'];?>");
+  </script>
+  {% endblock %} #}
 {% block content %}
+
+    {% if errorList %}
+        <ul>
+            {% for error in errorList %}
+                <li>{{error}}</li>
+                {% endfor %}
+        </ul>
+    {% endif %}
+
     <form method="post" enctype="multipart/form-data">
-
-        Category Id:<select>
-            <option value="{{v.catId}}"></option>
-            <option value="{{v.catId}}"></option>
-        </select>
-        <p>{{v.datePosted}}</p>
         Title: <input type="text" name="title" value="{{v.title}}"><br>
-        Body: <textarea  rows="4" cols="50" type="text" name="body" value="{{v.body}}"></textarea><br>
+        Body: <textarea name="body">{{v.body}}</textarea><br>             
+            <input type="submit" value="Add post">
+        </form>
 
-        <input type="submit" value="Add post">
-    </form>
-{% endblock %}
+        {% endblock %}

@@ -131,6 +131,8 @@ Mojgan :
 1. what have i done / not done since last scrum?
 imported the bootstrap to the master.html.twig
 get the password forgotten worked.
+I tried to understand the corrections prof did .
+manipulating the CSS
 
 2. what will i do from now until next scrum?
 the other urls need to be fixed according to master.html.twig.
@@ -143,13 +145,13 @@ google to fix the master and other pages.
 
 Lucas
 1. what have i done / not done since last scrum?
-
+modified the register for the member to be able to log in and upload an avatar to the uploads folder
 
 2. what will i do from now until next scrum?
-
+create regular expressions for the  user name. 
 
 3. where do i need help from my teammate, teacher, or internet?
-
+I needed help on how to upload the avatar on the uploads folder (greg helped). 
 
 ---------------------------------
 
@@ -157,26 +159,28 @@ Nov 8,2017 - wednesday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+forgot password and the request for new password through the link .
+finishing register and login pages with the functions tested.
 
 2. what will i do from now until next scrum?
-
+create the user interface from scratch.(login and register page's been done)
+trying to get the pagination worked for the posts.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+according to Prof's code.
 
 
 
 
 Lucas
 1. what have i done / not done since last scrum?
-
+revise the latest projects and last quiz so I could implement some similar parts on our project. 
 
 2. what will i do from now until next scrum?
-
+start with the users posts section and adapt the css.  
 
 3. where do i need help from my teammate, teacher, or internet?
-
+creating a responsive layout for the project.
 
 ---------------------------------
 
@@ -184,13 +188,12 @@ Nov 9,2017 - thursday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+tried to figure out the post pagination.
 
 2. what will i do from now until next scrum?
 
-
 3. where do i need help from my teammate, teacher, or internet?
-
+according to Prof's code.
 
 
 

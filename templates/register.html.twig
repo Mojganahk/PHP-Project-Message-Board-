@@ -25,14 +25,40 @@
     {% endif %}
     
 
-    <form method="post" enctype="multipart/form-data">
-        Name: <input type="text" name="name" value="{{v.name}}"><br>
-        Email: <input type="email" name="email" value="{{v.email}}"><span id="isTaken"></span><br>
-        Password: <input type="password" name="pass1"><br>
-        Password (repeated): <input type="password" name="pass2"><br>
-        <input type="file" name="avatar" >
-      
-        <input type="submit" value="Register">
-    </form>
+
+<div class="main">
+      <section class="module">
+         <div class="container">
+            <div class="row">
+              <div class="col-sm-5">
+                <h4 class="font-alt">Register</h4>
+                <hr class="divider-w mb-10">
+                <form class="form" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <input class="form-control" id="E-mail" type="email" name="email" value="{{v.email}}" placeholder="Email"/><span id="isTaken"></span>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="name" type="text" name="name" value="{{v.name}}" placeholder="name"/>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="pass1" type="password" name="pass1" placeholder="Password"/>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="pass2" type="password" name="pass2" placeholder="Re-enter Password"/>
+                  </div>
+                 
+                      <div class="form-group">
+                    <input class="form-control"  type="file" name="avatar" />
+                  </div>
+                     <div class="form-group">
+                    <button class="btn btn-block btn-round btn-b" type="submit" value="Register">Register</button>
+                  </div>
+                </form>
+                  </div>
+                  </div>
+              </div>
+      </section >
+    
+</div>
 
 {% endblock %}
