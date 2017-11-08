@@ -1,0 +1,1 @@
+[2017-11-06 02:35:26] main.WARNING: Uploaded file name with .. in it (possible attack): Array (     [name] => ..sports.png     [type] => image/png     [tmp_name] => C:\xampp\tmp\phpCD9A.tmp     [error] => 0     [size] => 473549 )  [] []
