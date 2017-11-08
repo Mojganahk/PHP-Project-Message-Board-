@@ -108,87 +108,90 @@ $app->map('/passreset/token/:secretToken', function($secretToken) use ($app, $lo
     }
 })->via('GET', 'POST');
 
-/*
-$app->get('/logout', function() use ($app) {
-    $_SESSION['user'] = array();
-    $app->render('logout.html.twig');
-});
+//--------------------------------------Post starts--------------------------------------
 
-$app->get('/login', function() use ($app) {
-    $app->render('login.html.twig');
-});
 
-$app->post('/login', function() use ($app) {
-    $email = $app->request()->post('email');
-    $pass = $app->request()->post('pass');
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-    $error = false;
-    if (!$row) {
-        $error = true; // user not found
-    } else {
-        if ($row['password'] != $pass) {
-            $error = true; // password invalid
-        }
+
+$app->get('/add', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
     }
-    if ($error) {
-        $app->render('login.html.twig', array('error' => true));
-    } else {
-        unset($row['password']);
-        $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig');
+    $app->render('post_addedit.html.twig');
+});
+
+$app->post('/add', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
     }
-});
 
-
-$app->get('/isemailregistered/:email', function($email) use ($app) {
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-    echo!$row ? "" : '<span style="background-color: red; font-weight: bold;">Email already taken</span>';
-});
-
-$app->get('/register', function() use ($app) {
-    $app->render('register.html.twig');
-});
-
-$app->post('/register', function() use ($app) {
-    $name = $app->request()->post('name');
-    $email = $app->request()->post('email');
-    $pass1 = $app->request()->post('pass1');
-    $pass2 = $app->request()->post('pass2');
+    $title = $app->request()->post('title');
+//    $datePosted = $app->request()->post('datePosted');
+    $body = $app->request()->post('body');
+    //  $catId = $app->request()->post('catId');
     //
-    $values = array('name' => $name, 'email' => $email);
+    $values = array('title' => $title, 'body' => $body); //'catId' => $catId
+
     $errorList = array();
     //
-    if (strlen($name) < 2 || strlen($name) > 50) {
-        $values['name'] = '';
-        array_push($errorList, "Name must be between 2 and 50 characters long");
+    if (strlen($title) < 2 || strlen($title) > 50) {
+        $values['title'] = '';
+        array_push($errorList, "Task must be between 2 and 50 characters long");
     }
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
-        $values['email'] = '';
-        array_push($errorList, "Email must look like a valid email");
-    } else {
-        $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-        if ($row) {
-            $values['email'] = '';
-            array_push($errorList, "Email already in use");
-        }
+
+
+    if (strlen($body) < 2 || strlen($body) > 2000) {
+        $values['body'] = '';
+        array_push($errorList, "body must be between 2 and 50 characters long");
     }
-    if ($pass1 != $pass2) {
-        array_push($errorList, "Passwords don't match");
-    } else { // TODO: do a better check for password quality (lower/upper/numbers/special)
-        if (strlen($pass1) < 2 || strlen($pass1) > 50) {
-            array_push($errorList, "Password must be between 2 and 50 characters long");
-        }
-    }
-    //
+
+
     if ($errorList) { // 3. failed submission
-        $app->render('register.html.twig', array(
+        $app->render('post_addedit.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
     } else { // 2. successful submission
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $pass1));
-        $app->render('register_success.html.twig');
+        // import image
+        $values['authorId'] = $_SESSION['user']['id'];
+        DB::insert('posts', $values);
+        $app->render('post_addedit_success.html.twig');
     }
 });
 
-*/
 
+$app->get('/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
+    if (!$post) {
+        echo "Item not found"; // FIXME: 404, not found page
+        return;
+    }
+    $app->render('post_delete.html.twig', array('post' => $post));
+});
+
+$app->post('/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    $confirmed = $app->request()->post('confirmed');
+    if ($confirmed != 'true') {
+        echo 'error: confirmation missing'; // post: use template
+        return;
+    }
+    DB::delete('posts', "id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
+    if (DB::affectedRows() == 0) {
+        echo 'error: record not found'; // post: use template
+    } else {
+        $app->render('post_delete_success.html.twig');
+    }
+});
+
+
+
+
+//--------------------------------------Post ends--------------------------------------
