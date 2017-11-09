@@ -200,13 +200,13 @@ according to Prof's code.
 
 Lucas
 1. what have i done / not done since last scrum?
-
+tried to add a user post on the database, it is not working for now. 
 
 2. what will i do from now until next scrum?
-
+find the way to add a post.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+I need help to understand the logic behind the addition of a post and how to link them to each category.
 
 ---------------------------------
 
