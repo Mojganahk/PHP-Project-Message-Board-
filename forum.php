@@ -396,94 +396,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
 
 
 //--------------------------------------Post starts--------------------------------------
-//
-//$app->get('/', function() use ($app) {
-//    $postList = array();
-//    if ($_SESSION['user']) {
-//        $postList = DB::query('SELECT * FROM posts WHERE authorId=%i', $_SESSION['user']['id']);
-//    }
-//    $app->render('index.html.twig', array('postList' => $postList));
-//});
 
-
-//$app->get('/add', function() use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $app->render('post_addedit.html.twig');
-//});
-//
-//$app->post('/add', function() use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//
-//    $title = $app->request()->post('title');
-////    $datePosted = $app->request()->post('datePosted');
-//    $body = $app->request()->post('body');
-//    //  $catId = $app->request()->post('catId');
-//    //
-//    $values = array('title' => $title, 'body' => $body); //'catId' => $catId
-//
-//    $errorList = array();
-//    //
-//    if (strlen($title) < 2 || strlen($title) > 50) {
-//        $values['title'] = '';
-//        array_push($errorList, "Task must be between 2 and 50 characters long");
-//    }
-//
-//
-//    if (strlen($body) < 2 || strlen($body) > 2000) {
-//        $values['body'] = '';
-//        array_push($errorList, "body must be between 2 and 50 characters long");
-//    }
-//
-//
-//    if ($errorList) { // 3. failed submission
-//        $app->render('post_addedit.html.twig', array(
-//            'errorList' => $errorList,
-//            'v' => $values));
-//    } else { // 2. successful submission
-//        // import image
-//        $values['authorId'] = $_SESSION['user']['id'];
-//        DB::insert('posts', $values);
-//        $app->render('post_addedit_success.html.twig');
-//    }
-//});
-//
-//
-//$app->get('/delete/:id', function($id) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
-//    if (!$post) {
-//        echo "Item not found"; // FIXME: 404, not found page
-//        return;
-//    }
-//    $app->render('post_delete.html.twig', array('post' => $post));
-//});
-//
-//$app->post('/delete/:id', function($id) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $confirmed = $app->request()->post('confirmed');
-//    if ($confirmed != 'true') {
-//        echo 'error: confirmation missing'; // post: use template
-//        return;
-//    }
-//    DB::delete('posts', "id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
-//    if (DB::affectedRows() == 0) {
-//        echo 'error: record not found'; // post: use template
-//    } else {
-//        $app->render('post_delete_success.html.twig');
-//    }
-//});
 //INDEX 
 //load to main page when nothing entered
 $app->get('/(:term)', function($term = null) use ($app) {
@@ -544,11 +457,7 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-<<<<<<< HEAD
-    $categoryName = $app->request()->post('categoryName');
-=======
     $catId = $app->request()->post('catName');
->>>>>>> 03b790220ab64c44f54426ecb54f382d39182b34
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
@@ -577,18 +486,11 @@ $app->post('/addpost', function() use ($app, $log) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-<<<<<<< HEAD
-        DB::insert('posts', $values);
-
-=======
         DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
         
->>>>>>> 03b790220ab64c44f54426ecb54f382d39182b34
         $app->render('post_addedit_success.html.twig');
     }
 });
-
-
 
 
 
@@ -648,7 +550,17 @@ $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
 });
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
 
-
+//-------------------------------------------------- CATEGORY LIST STARTS ---------------------------------------------------------
+$app->get('/categories', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    //
+    $categoriesList = DB::query("SELECT categoryName, description, imagePath FROM categories");
+    $app->render('admin/categories_list.html.twig', array('list' => $categoriesList));
+});
+//-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
 
 
 
