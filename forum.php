@@ -516,8 +516,8 @@ $app->get('/user/:id', function($id = -1) use($app) {
     }
     if ($id != -1) {
 //to display list with user's name
-        $postList = DB::query("SELECT name, title, body, datePosted, categoryName FROM posts, members WHERE posts.authorId=members.id AND posts.authorId=%i", $id);
-//to display the to-do without the user's name
+        $postList = DB::query("SELECT name, title, body, datePosted, categoryName FROM posts, users, categories WHERE posts.authorId=users.id AND posts.authorId=%i", $id);
+//to display the post without the user's name
         $app->render('index.html.twig', array('list' => $postList));
     }
 })->conditions(array(
@@ -542,14 +542,17 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-    $catId = $app->request()->post('catId');
+    $categoryName = $app->request()->post('categoryName');
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
-    $values = array('catId' => $catId, 'title' => $title, 'body' => $body);
+    $values = array('categoryName' => $categoryName, 'title' => $title, 'body' => $body);
     $errorList = array();
-// catId check
+    $query = DB::query("SELECT catId, categoryName FROM posts, categories");
     
+    
+    $id=$row["catId"];  
+    $category = $row["categoryName"];
     
 // title check
     if (strlen($title) < 1 || strlen($title) > 100) {
@@ -568,7 +571,7 @@ $app->post('/addpost', function() use ($app, $log) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
+        DB::insert('posts', $values);
 
         $app->render('post_addedit_success.html.twig');
     }

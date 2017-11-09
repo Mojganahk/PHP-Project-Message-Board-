@@ -17,6 +17,9 @@
     {% endif %}
 
     <form method="post" enctype="multipart/form-data">
+        Category: <select name="categories" >
+          <option value="0" selected="selected"> Choose</option>
+          </select><br>
         Title: <input type="text" name="title" value="{{v.title}}"><br>
         Body: <textarea name="body">{{v.body}}</textarea><br>             
             <input type="submit" value="Add post">
