@@ -516,7 +516,7 @@ $app->get('/user/:id', function($id = -1) use($app) {
     }
     if ($id != -1) {
 //to display list with user's name
-        $postList = DB::query("SELECT name, title, body, datePosted, photoPath FROM posts, members WHERE posts.authorId=members.id AND posts.authorId=%i", $id);
+        $postList = DB::query("SELECT name, title, body, datePosted, categoryName FROM posts, members WHERE posts.authorId=members.id AND posts.authorId=%i", $id);
 //to display the to-do without the user's name
         $app->render('index.html.twig', array('list' => $postList));
     }
@@ -542,11 +542,15 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
+    $catId = $app->request()->post('catId');
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
-    $values = array('title' => $title, 'body' => $body);
+    $values = array('catId' => $catId, 'title' => $title, 'body' => $body);
     $errorList = array();
+// catId check
+    
+    
 // title check
     if (strlen($title) < 1 || strlen($title) > 100) {
         array_push($errorList, "Title must be between 1 and 100 characters.");
@@ -564,7 +568,7 @@ $app->post('/addpost', function() use ($app, $log) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-        DB::insert('posts', array('authorId' => $authorId, 'title' => $title, 'body' => $body));
+        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
 
         $app->render('post_addedit_success.html.twig');
     }
