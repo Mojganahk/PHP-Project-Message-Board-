@@ -116,13 +116,11 @@ $app->get('/logout', function() use ($app) {
 $app->get('/register', function() use ($app) {
     $app->render('register.html.twig');
 });
-
 $app->post('/register', function() use ($app) {
     $name = $app->request()->post('name');
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
-
     //
     $values = array('name' => $name, 'email' => $email);
     $errorList = array();
