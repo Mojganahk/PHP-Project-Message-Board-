@@ -577,9 +577,9 @@ $app->post('/addpost', function() use ($app, $log) {
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
 
 // URL/event handlers go here
-$app->get('/products(/:page)', function($page = 1) use ($app) {
+$app->get('/posts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -587,17 +587,17 @@ $app->get('/products(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('products.html.twig', array(
-        "productList" => $productList,
+    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('posts.html.twig', array(
+        "postsList" => $postList,
         "maxPages" => $maxPages
         ));
 });
 
 // Products pagination usinx AJAX - main page
-$app->get('/newproducts(/:page)', function($page = 1) use ($app) {
+$app->get('/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -605,17 +605,17 @@ $app->get('/newproducts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('newproducts.html.twig', array(
-        "productList" => $productList,
+    $productList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('newposts.html.twig', array(
+        "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
         ));
 });
 // Products pagination usinx AJAX - just the table of products
-$app->get('/ajax/newproducts(/:page)', function($page = 1) use ($app) {
+$app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -623,9 +623,9 @@ $app->get('/ajax/newproducts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('ajaxnewproducts.html.twig', array(
-        "productList" => $productList,
+    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('ajaxnewposts.html.twig', array(
+        "postList" => $postList,
         ));
 });
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
