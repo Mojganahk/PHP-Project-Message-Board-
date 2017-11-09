@@ -530,7 +530,9 @@ $app->get('/addpost', function() use ($app, $log) {
         $app->render('access_denied.html.twig');
         return;
     }
-    $app->render('post_addedit.html.twig');
+    $RowCategory = DB::query("SELECT DISTINCT id,categoryName FROM categories");
+    
+    $app->render('post_addedit.html.twig', array('RowCategory' => $RowCategory));
 });
 
 // ADD SUBMISSION
@@ -542,7 +544,7 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-    $catId = $app->request()->post('catId');
+    $catId = $app->request()->post('catName');
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
@@ -569,7 +571,7 @@ $app->post('/addpost', function() use ($app, $log) {
     } else { //2. successful submission
 //INSERT STATEMENT
         DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
-
+        
         $app->render('post_addedit_success.html.twig');
     }
 });
