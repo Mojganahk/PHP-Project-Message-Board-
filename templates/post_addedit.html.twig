@@ -15,11 +15,22 @@
                 {% endfor %}
         </ul>
     {% endif %}
-
+    <div>
     <form method="post" enctype="multipart/form-data">
+<<<<<<< HEAD
+        Category: <select name="categories" >
+          <option value="0" selected="selected"> Choose</option>
+          </select><br>
+=======
+        Category:<select name="catName">
+            {% for rc in RowCategory %}
+            <option value="{{rc.id}}" >{{rc.categoryName}}</option>
+            {%endfor%}
+        </select>
+>>>>>>> 03b790220ab64c44f54426ecb54f382d39182b34
         Title: <input type="text" name="title" value="{{v.title}}"><br>
         Body: <textarea name="body">{{v.body}}</textarea><br>             
-            <input type="submit" value="Add post">
-        </form>
-
-        {% endblock %}
+        <input type="submit" value="Add post">
+    </form>
+    </div>
+{% endblock %}

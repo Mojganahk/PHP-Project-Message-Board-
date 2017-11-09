@@ -394,94 +394,7 @@ $app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $lo
 
 
 //--------------------------------------Post starts--------------------------------------
-//
-//$app->get('/', function() use ($app) {
-//    $postList = array();
-//    if ($_SESSION['user']) {
-//        $postList = DB::query('SELECT * FROM posts WHERE authorId=%i', $_SESSION['user']['id']);
-//    }
-//    $app->render('index.html.twig', array('postList' => $postList));
-//});
 
-
-//$app->get('/add', function() use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $app->render('post_addedit.html.twig');
-//});
-//
-//$app->post('/add', function() use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//
-//    $title = $app->request()->post('title');
-////    $datePosted = $app->request()->post('datePosted');
-//    $body = $app->request()->post('body');
-//    //  $catId = $app->request()->post('catId');
-//    //
-//    $values = array('title' => $title, 'body' => $body); //'catId' => $catId
-//
-//    $errorList = array();
-//    //
-//    if (strlen($title) < 2 || strlen($title) > 50) {
-//        $values['title'] = '';
-//        array_push($errorList, "Task must be between 2 and 50 characters long");
-//    }
-//
-//
-//    if (strlen($body) < 2 || strlen($body) > 2000) {
-//        $values['body'] = '';
-//        array_push($errorList, "body must be between 2 and 50 characters long");
-//    }
-//
-//
-//    if ($errorList) { // 3. failed submission
-//        $app->render('post_addedit.html.twig', array(
-//            'errorList' => $errorList,
-//            'v' => $values));
-//    } else { // 2. successful submission
-//        // import image
-//        $values['authorId'] = $_SESSION['user']['id'];
-//        DB::insert('posts', $values);
-//        $app->render('post_addedit_success.html.twig');
-//    }
-//});
-//
-//
-//$app->get('/delete/:id', function($id) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $post = DB::queryFirstRow("SELECT * FROM posts WHERE id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
-//    if (!$post) {
-//        echo "Item not found"; // FIXME: 404, not found page
-//        return;
-//    }
-//    $app->render('post_delete.html.twig', array('post' => $post));
-//});
-//
-//$app->post('/delete/:id', function($id) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//    $confirmed = $app->request()->post('confirmed');
-//    if ($confirmed != 'true') {
-//        echo 'error: confirmation missing'; // post: use template
-//        return;
-//    }
-//    DB::delete('posts', "id=%i AND authorId=%i", $id, $_SESSION['user']['id']);
-//    if (DB::affectedRows() == 0) {
-//        echo 'error: record not found'; // post: use template
-//    } else {
-//        $app->render('post_delete_success.html.twig');
-//    }
-//});
 //INDEX 
 //load to main page when nothing entered
 $app->get('/(:term)', function($term = null) use ($app) {
@@ -514,8 +427,8 @@ $app->get('/user/:id', function($id = -1) use($app) {
     }
     if ($id != -1) {
 //to display list with user's name
-        $postList = DB::query("SELECT name, title, body, datePosted, photoPath FROM posts, members WHERE posts.authorId=members.id AND posts.authorId=%i", $id);
-//to display the to-do without the user's name
+        $postList = DB::query("SELECT name, title, body, datePosted, categoryName FROM posts, users, categories WHERE posts.authorId=users.id AND posts.authorId=%i", $id);
+//to display the post without the user's name
         $app->render('index.html.twig', array('list' => $postList));
     }
 })->conditions(array(
@@ -528,7 +441,9 @@ $app->get('/addpost', function() use ($app, $log) {
         $app->render('access_denied.html.twig');
         return;
     }
-    $app->render('post_addedit.html.twig');
+    $RowCategory = DB::query("SELECT DISTINCT id,categoryName FROM categories");
+    
+    $app->render('post_addedit.html.twig', array('RowCategory' => $RowCategory));
 });
 
 // ADD SUBMISSION
@@ -540,11 +455,18 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
+    $catId = $app->request()->post('catName');
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
-    $values = array('title' => $title, 'body' => $body);
+    $values = array('categoryName' => $categoryName, 'title' => $title, 'body' => $body);
     $errorList = array();
+    $query = DB::query("SELECT catId, categoryName FROM posts, categories");
+    
+    
+    $id=$row["catId"];  
+    $category = $row["categoryName"];
+    
 // title check
     if (strlen($title) < 1 || strlen($title) > 100) {
         array_push($errorList, "Title must be between 1 and 100 characters.");
@@ -562,22 +484,20 @@ $app->post('/addpost', function() use ($app, $log) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-        DB::insert('posts', array('authorId' => $authorId, 'title' => $title, 'body' => $body));
-
+        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
+        
         $app->render('post_addedit_success.html.twig');
     }
 });
 
 
 
-
-
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
 
 // URL/event handlers go here
-$app->get('/products(/:page)', function($page = 1) use ($app) {
+$app->get('/posts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -585,17 +505,17 @@ $app->get('/products(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('products.html.twig', array(
-        "productList" => $productList,
+    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('posts.html.twig', array(
+        "postsList" => $postList,
         "maxPages" => $maxPages
         ));
 });
 
 // Products pagination usinx AJAX - main page
-$app->get('/newproducts(/:page)', function($page = 1) use ($app) {
+$app->get('/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -603,17 +523,17 @@ $app->get('/newproducts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('newproducts.html.twig', array(
-        "productList" => $productList,
+    $productList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('newposts.html.twig', array(
+        "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
         ));
 });
 // Products pagination usinx AJAX - just the table of products
-$app->get('/ajax/newproducts(/:page)', function($page = 1) use ($app) {
+$app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM products");
+    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -621,14 +541,24 @@ $app->get('/ajax/newproducts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM products ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('ajaxnewproducts.html.twig', array(
-        "productList" => $productList,
+    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $app->render('ajaxnewposts.html.twig', array(
+        "postList" => $postList,
         ));
 });
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
 
-
+//-------------------------------------------------- CATEGORY LIST STARTS ---------------------------------------------------------
+$app->get('/categories', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    //
+    $categoriesList = DB::query("SELECT categoryName, description, imagePath FROM categories");
+    $app->render('admin/categories_list.html.twig', array('list' => $categoriesList));
+});
+//-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
 
 
 
