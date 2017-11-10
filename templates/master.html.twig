@@ -2,130 +2,131 @@
 <html lang="en-US" dir="ltr">
 
     <head>
-      
+
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!--  ================== JavaScripts   ======================================-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="assets/lib/jquery/dist/jquery.js"></script>
-        <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="assets/lib/wow/dist/wow.js"></script>
-        <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-        <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
-        <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
-        <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
-        <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
-        <script src="assets/lib/smoothscroll.js"></script>
-        <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
-        <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-        <script src="assets/js/plugins.js"></script>
-        <script src="assets/js/main.js"></script>
+        <script src="/assets/lib/jquery/dist/jquery.js"></script>
+        <script src="/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/wow/dist/wow.js"></script>
+        <script src="/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+        <script src="/assets/lib/isotope/dist/isotope.pkgd.js"></script>
+        <script src="/assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+        <script src="/assets/lib/flexslider/jquery.flexslider.js"></script>
+        <script src="/assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+        <script src="/assets/lib/smoothscroll.js"></script>
+        <script src="/assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+        <script src="/assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+        <script src="/assets/js/plugins.js"></script>
+        <script src="/assets/js/main.js"></script>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <!-- Default stylesheets-->
-        <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Template specific stylesheets-->
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-        <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-        <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-        <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-        <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-        <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-        <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="/assets/lib/animate.css/animate.css" rel="stylesheet">
+        <link href="/assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
+        <link href="/assets/lib/flexslider/flexslider.css" rel="stylesheet">
+        <link href="/assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="/assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+        <link href="/assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+        <link href="/assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+        <link href="/assets/css/style.css" rel="stylesheet">
         <title>{% block title %}Default{% endblock %}</title>
 
     </head>
 
-   
+  
 
-<body>
-    <div>
-         <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
-                        <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
-                        <span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Forum</a>
-                </div>
-                <div class="collapse navbar-collapse" id="custom-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
-                         </li>
-                        <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
-                        </li>
-                            <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Posts</a>
-                        </li>
-                        <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
-                            <ul class="dropdown-menu">
-                                   
-                                <li><a href="/login"> Login  </a></li>
-                                <li><a href="/register">Register</a></li>
-                                <li><a href="404.html">Page 404</a></li>
-                            </ul>
-                        </li>
-             </ul>
-                </div>
+    <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+
+        <main>
+            <div class="page-loader">
+                <div class="loader">Loading...</div>
             </div>
-        </nav>
-    <div class="page-loader">
-        <div class="loader">Loading...</div> 
-        
-    </div>
-    </div>
-{% block content %}
-
-<!--<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">-->
-   
-<div>
-
-      {% block UserIDentification %}
-       
-            {% if userSession %}
-                <p>Hello {{ userSession.name }}, You are Logged in.
-                    You may <a href="/logout">logout</a></p>
-                {% else %}
-                <p>You're not logged in. You may <a href="/register">Register</a>
-                    or <a href="/login">Login</a>.</p>
-                {% endif %}
-        
-    {% endblock %}
-
-</div>
-
-
- 
-<!--</section>-->
-    
-      
-{% endblock %}
-
-
-
-        {% block footer %}
-
-            <footer class="footer bg-dark">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Forum</a>, All Rights Reserved</p>
+            <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+                <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+                                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
+                                <span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Forum</a>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="footer-social-links"><a href="#">
-                                    <i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter">
-                                        
-                                    </i></a><a href="#"><i class="fa fa-skype"></i></a>
-                            </div>
+                        <div class="collapse navbar-collapse" id="custom-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
+                                </li>
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+                                </li>
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Posts</a>
+                                </li>
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
+                                    <ul class="dropdown-menu">
+
+                                        <li><a href="/login"> Login  </a></li>
+                                        <li><a href="/register">Register</a></li>
+                                        <li><a href="404.html">Page 404</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </nav>
+
                 </div>
-            </footer>
-        {% endblock %}
-</body>
-</html>
+              
+
+                    <!--<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">-->
+
+                  {% block content %}
+
+
+                                {% block UserIDentification %}
+
+                                    {% if userSession %}
+                                        <p>Hello {{ userSession.name }}, You are Logged in.
+                                            You may <a href="/logout">logout</a></p>
+                                        {% else %}
+                                        <p>You're not logged in. You may <a href="/register">Register</a>
+                                            or <a href="/login">Login</a>.</p>
+                                        {% endif %}
+
+                                {% endblock %}
+
+
+
+                    <!--</section>-->
+
+
+                {% endblock %}
+
+
+
+                {% block footer %}
+
+                    <footer class="footer bg-dark">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Forum</a>, All Rights Reserved</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-social-links"><a href="#">
+                                            <i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter">
+
+                                            </i></a><a href="#"><i class="fa fa-skype"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                {% endblock %}
+                </body>
+                </html>
