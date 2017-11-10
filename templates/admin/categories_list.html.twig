@@ -4,21 +4,34 @@
 
 {% block content %}
     <p><a href="/admin/categories/add">Add category</a></p>
-    <table border="1">
-        <tr><th>#</th><th>name</th><th>description</th><th>image</th><th>actions</th></tr>
-    {% for c in list %}
-            <tr class="{% if loop.index is odd %}rowodd{% else %}roweven{% endif %}">
-                <td>{{loop.index}}</td>
-                <td>{{c.categoryName}}</td>
-                <td>{{c.description}}</td>
-                <td><img src="{{c.imagePath}}" width="100" height="100"></td>
-                <td>
-                    <a href="/admin/categories/delete/{{c.id}}">Delete</a>
-                    <a href="/admin/categories/edit/{{c.id}}">Edit</a>
-                </td></tr>
-    {% else %}
-        <tr><td colspan="6">You have no categories</td></tr>
-    {% endfor %}
-    </table>
-    
-{% endblock %}
+
+
+    <div >
+
+        {% for c in list %}
+            <div >
+                <div >
+                    <div class="col-xs-6 col-md-4">
+                        <p>{{loop.index}}</p>
+                        <p>{{c.categoryName}}</p>
+                        <p>{{c.description}}</p>
+                        <p><img class="center-block" src="{{c.imagePath}}" width="200" height="200"></p>
+                        <p>
+                            <a href="/admin/categories/delete/{{c.id}}">Delete</a>
+                            <a href="/admin/categories/edit/{{c.id}}">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div>
+
+                <div colspan="6">
+                    <p>You have no categories</p>
+                </div>
+
+            </div>
+        {% endfor %}
+
+    </div>
+    {% endblock %}

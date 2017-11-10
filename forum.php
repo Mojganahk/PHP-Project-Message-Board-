@@ -521,7 +521,7 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
         ));
 });
 
-// Products pagination usinx AJAX - main page
+// posts pagination usinx AJAX - main page
 $app->get('/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
     $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
@@ -532,14 +532,14 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $productList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
     $app->render('newposts.html.twig', array(
         "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
         ));
 });
-// Products pagination usinx AJAX - just the table of products
+// posts pagination usinx AJAX - just the table of post
 $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
     $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
@@ -577,7 +577,7 @@ $app->get('/posts', function() use ($app) {
     }
     //
     $postList = DB::query("SELECT title, body FROM posts");
-    $app->render('/post_list_by_category.html.twig', array('list' => $postList));
+    $app->render('/newposts.html.twig', array('list' => $postList));
 });
 //-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
 
