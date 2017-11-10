@@ -2,8 +2,40 @@
 
 {% block title %}Add successful{% endblock %}
 
-{% block content %}
-    
-<p>Add successful <a href="/">click to continue</a>.</p>
+
+{% block content %} 
+
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
+
+               
+                {% block UserIDentification %}
+
+                    {% if userSession %}
+                        <p>Hello {{ userSession.name }}, You are Logged in.
+                            You may <a href="/logout">logout</a></p>
+                        {% else %}
+                        <p>You're not logged in. You may <a href="/register">Register</a>
+                            or <a href="/login">Login</a>.</p>
+                        {% endif %}
+
+                {% endblock %}
+            </div>
+            <div class="col-sm-6 col-md-8 col-lg-9">
+                <div class="callout-text font-alt">
+                    <h4 style="margin-top: 0px; ">
+
+
+                      <p>Add successful <a href="/">click to continue</a>.</p>
+                </div>
+ </div>
+            </div>
+
+</section>
+</div>
+
+
 
 {% endblock %}

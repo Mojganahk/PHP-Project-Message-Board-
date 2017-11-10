@@ -6,25 +6,60 @@
   $("#isDone").val("<?php echo $_POST['isDone'];?>");
   </script>
   {% endblock %} #}
-{% block content %}
 
-    {% if errorList %}
-        <ul>
-            {% for error in errorList %}
-                <li>{{error}}</li>
-                {% endfor %}
-        </ul>
-    {% endif %}
-    <div>
-    <form method="post" enctype="multipart/form-data">
-        Category:<select name="catName">
-            {% for rc in RowCategory %}
-            <option value="{{rc.id}}" >{{rc.categoryName}}</option>
-            {%endfor%}
-        </select>
-        Title: <input type="text" name="title" value="{{v.title}}"><br>
-        Body: <textarea name="body">{{v.body}}</textarea><br>             
-        <input type="submit" value="Add post">
-    </form>
+
+
+{% block content %} 
+
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
+
+
+                    {% block UserIDentification %}
+
+                        {% if userSession %}
+                            <p>Hello {{ userSession.name }}, You are Logged in.
+                                You may <a href="/logout">logout</a></p>
+                            {% else %}
+                            <p>You're not logged in. You may <a href="/register">Register</a>
+                                or <a href="/login">Login</a>.</p>
+                            {% endif %}
+
+                    {% endblock %}
+                </div>
+                <div >
+                    <h4 class="font-alt">Add Post</h4>
+
+
+                    {% if errorList %}
+                        <ul>
+                            {% for error in errorList %}
+                                <li>{{error}}</li>
+                                {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div>
+                        <form  class="form" method="post" enctype="multipart/form-data">
+                            Category:<select name="catName">
+                                {% for rc in RowCategory %}
+                                    <option value="{{rc.id}}" >{{rc.categoryName}}</option>
+                                {%endfor%}
+                            </select><br> 
+                            Title: <input class="form-control" type="text" name="title" value="{{v.title}}"><br>
+                             Body: <textarea  name="area1" cols="40" class="form-control" name="body">{{v.body}}</textarea><br>             
+
+                            <button class="btn btn-round btn-b" type="submit" value="Add post" >Add Post</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
     </div>
+
+
+
 {% endblock %}

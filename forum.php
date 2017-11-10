@@ -66,12 +66,10 @@ $twig->addGlobal('userSession', $_SESSION['user']);
 
 
 //eventhandlers:
-$app->get('/', function() use ($app) {
-    echo "jjjjjjjjjjjjjjjjjjaaaaa";
-});
+
 
 //index
-$app->get('/index', function() use ($app) {
+$app->get('/', function() use ($app) {
     $app->render('index.html.twig');
 });
 
@@ -504,7 +502,7 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
     }
     $skip = ($page - 1) * $perPage;
     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
-    $app->render('posts.html.twig', array(
+    $app->render('newposts.html.twig', array(
         "postsList" => $postList,
         "maxPages" => $maxPages
         ));

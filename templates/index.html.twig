@@ -1,51 +1,46 @@
 {% extends "master.html.twig" %}
 
 {% block title %}Index{% endblock %}
+{% block content %} 
 
-{% block content %}
-    <p><a href="/add">Add Post</a></p>
-    {% if userSession %}
-     
-        {% for t in postList %}
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
 
-            <div border="1" style="background-color:whitesmoke;"    >
 
-                <h2 style="font-weight: 300; font-size: 25px;
-                    margin: 0px 0px 0px 0px; line-height: 120%;
-                    font-family: 'Open sans', sans-serif;">
-                    {{loop.index}} {{t.title}}
-                </h2>
-                
-                <p style=" background: #f20553; width: 70px;
-                   height: 55px; border-radius: 10px; float: left;
-                   margin: 10px 30px 0px 0px; padding: 15px 0px 0px 0px;
-                   color: #ffffff; font-size: 14px; font-weight: 900;
-                   text-align: center; line-height: 100%;
-                   font-family: 'Open sans', sans-serif;"> {{t.datePosted}}
-                </p>
-                
-                <blockquote style=" padding: 30px 40px;
-                            font-family: 'Bitter',serif; 
-                            font-size: 18px;
-                            border-left: 5px solid #d0d0d0;
-                            margin: 20px 40px; color: #a9a9a9;" > {{t.body}}</blockquote>
-                <blockquote>           
-                    <a href="/edit/{{t.id}}">Edit</a>
-                    <a href="/delete/{{t.id}}">Delete</a>
-                    <a href="/comment/{{t.id}}">Comment</a>
-                </blockquote>
+                    {% block UserIDentification %}
 
+                        {% if userSession %}
+                            <p>Hello {{ userSession.name }}, You are Logged in.
+                                You may <a href="/logout">logout</a></p>
+                            {% else %}
+                            <p>You're not logged in. You may <a href="/register">Register</a>
+                                or <a href="/login">Login</a>.</p>
+                            {% endif %}
+
+                    {% endblock %}
+                </div>
+                <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <h1 class="module-title font-alt mb-0">Digital Marketing Forum</h1>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
+
+                    </div>
+                </div>
             </div>
 
-   
-
-        {% endfor %}
-
+        </section>
+    </div>
 
 
 
-    </table>
-{% else %}
-    <p>You must register or login first to view your your data.</p>
-{% endif %}
 {% endblock %}

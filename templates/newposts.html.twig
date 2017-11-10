@@ -5,40 +5,73 @@
 {% block headextra %}
     <script>
         var currentPage = {{currentPage}};
-        function loadPage(page) {
-            $('#btPage' + currentPage).removeClass("currentPageButton");
-            currentPage = page;
-            $('#btPage' + currentPage).addClass("currentPageButton");
-            $('#itemsView').load("/ajax/newposts/" + page);
-            window.history.pushState("", "Post list", "/newposts/" + page);
-        }
+                function loadPage(page) {
+                    $('#btPage' + currentPage).removeClass("currentPageButton");
+                    currentPage = page;
+                    $('#btPage' + currentPage).addClass("currentPageButton");
+                    $('#itemsView').load("/ajax/newposts/" + page);
+                    window.history.pushState("", "Post list", "/newposts/" + page);
+                }
     </script>
 {% endblock %}
 
 {% block content %} 
-    <div id="itemsView">
-       <table border="1">
-    <tr><th>id</th><th>authorId</th><th>catId</th><th>title</th><th>body</th><th>datePosted</th></tr>
-            {% for p in postList %}
-        <tr><td>{{p.id}}</td>
-            <td>{{p.authorId}}</td>
-            <td>{{p.catId}}</td>
-            <td>{{p.title}}</td>
-             <td>{{p.body}}</td>
-              <td>{{p.datePosted}}</td>
-            <td><a href="/admin/post/edit/{{p.id}}">edit</a>
-                <a href="/admin/post/delete/{{p.id}}">delete</a>
-            </td></tr>
-        {% endfor %}
-</table>
-    </div>
 
-    <div class="paginationContainer">
-        {% for page in range(1,maxPages) %}
-            <button class="{% if page == currentPage %}currentPageButton{% endif %}"
-                    id="btPage{{page}}" onclick="loadPage({{page}});">{{page}}</button>
-        {% endfor %}
-    </div>
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-8 col-lg-9">
+                        <div class="callout-text font-alt">
+                            <h4 style="margin-top: 0px; ">
 
+                                <div id="itemsView">
+                                    <table border="1">
+                                        <tr><th>id</th><th>authorId</th><th>catId</th><th>title</th><th>body</th><th>datePosted</th></tr>
+                                                {% for p in postList %}
+                                            <tr><td>{{p.id}}</td>
+                                                <td>{{p.authorId}}</td>
+                                                <td>{{p.catId}}</td>
+                                                <td>{{p.title}}</td>
+                                                <td>{{p.body}}</td>
+                                                <td>{{p.datePosted}}</td>
+                                                <td><a href="/admin/post/edit/{{p.id}}">edit</a>
+                                                    <a href="/admin/post/delete/{{p.id}}">delete</a>
+                                                </td></tr>
+                                            {% endfor %}
+                                    </table>
+                                </div>
+
+                                <div class="paginationContainer">
+                                    {% for page in range(1,maxPages) %}
+                                        <button class="{% if page == currentPage %}currentPageButton{% endif %}"
+                                                id="btPage{{page}}" onclick="loadPage({{page}});">{{page}}</button>
+                                    {% endfor %}
+                                </div>
+
+
+
+
+
+
+
+                        </div>
+                        {% block UserIDentification %}
+
+                            {% if userSession %}
+                                <p>Hello {{ userSession.name }}, You are Logged in.
+                                    You may <a href="/logout">logout</a></p>
+                                {% else %}
+                                <p>You're not logged in. You may <a href="/register">Register</a>
+                                    or <a href="/login">Login</a>.</p>
+                                {% endif %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
 
 {% endblock %}

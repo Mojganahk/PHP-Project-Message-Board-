@@ -39,7 +39,7 @@
         <link href="/assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
         <title>{% block title %}Default{% endblock %}</title>
-
+        {% block headextra %}{% endblock %}
     </head>
 
   
@@ -56,22 +56,31 @@
                         <div class="navbar-header">
                             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
                                 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
-                                <span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Forum</a>
+                                <span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Digital Marketing Forum</a>
                         </div>
                         <div class="collapse navbar-collapse" id="custom-collapse">
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
+                                <li class="dropdown"><a class="dropdown-toggle" href="/" >Home</a>
                                 </li>
                                 <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Categories</a>
+                                      <ul class="dropdown-menu">
+                                    <li><a href="/categories"> All Categories </a></li>
+                                   
+                                  </ul>
                                 </li>
                                 <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Posts</a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="/addpost"> Add Your Post  </a></li>
+                                    <li><a href="/newposts">All Posts</a></li>
+                                  </ul>
                                 </li>
                                 <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
                                     <ul class="dropdown-menu">
 
                                         <li><a href="/login"> Login  </a></li>
                                         <li><a href="/register">Register</a></li>
-                                        <li><a href="404.html">Page 404</a></li>
+                                         <li><a href="/logout">Logout</a></li>
+                                     
                                     </ul>
                                 </li>
                             </ul>
@@ -114,7 +123,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Forum</a>, All Rights Reserved</p>
+                                    <p class="copyright font-alt">&copy; 2017&nbsp;<a href="index.html">Digital Marketing Forum</a>, All Rights Reserved</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="footer-social-links"><a href="#">

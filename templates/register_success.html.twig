@@ -3,7 +3,7 @@
 {% block title %}Registration successful{% endblock %}
 
 
-    {% block content %}
+{% block content %}
     <div class="main showcase-page">
         <section class="module-extra-small bg-dark">
             <div class="container">
@@ -14,28 +14,28 @@
 
                                 <p>You've been registered. You may now <a href="/login">login</a>.
 
-                                
-                                
-                                
-                                
+                                    </div>
+                                    {% block UserIDentification %}
 
-                        </div>
-                         {% block UserIDentification %}
-
-                                    {% if userSession %}
+                                        {% if userSession %}
                                         <p>Hello {{ userSession.name }}, You are Logged in.
-                                            You may <a href="/logout">logout</a></p>
-                                        {% else %}
+                                            You may <a href="/logout">logout</a>  </p>
+                                        <div class="col-xs-6 col-md-4">
+                                       <img class="center-block" src="{{u.avatarPath}}" width="100" height="100">
+                                        
+                                        </div>
+                                    {% else %}
                                         <p>You're not logged in. You may <a href="/register">Register</a>
                                             or <a href="/login">Login</a>.</p>
                                         {% endif %}
 
                                 {% endblock %}
+
+                        </div>
                     </div>
                 </div>
-            </div>
-              
+
         </section>
     </div>
-    {% endblock %}
+{% endblock %}
 
