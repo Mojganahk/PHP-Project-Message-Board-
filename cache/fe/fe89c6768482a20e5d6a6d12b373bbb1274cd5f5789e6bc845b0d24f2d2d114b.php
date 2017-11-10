@@ -1,14 +1,14 @@
 <?php
 
-/* logout.html.twig */
-class __TwigTemplate_1075b5c98becc9eb1e9fc80be5c3dc54ee24b669daf3a30193bd3632837abf05 extends Twig_Template
+/* login_success.html.twig */
+class __TwigTemplate_5ade8803024902265c60f027c0136f118aefc19a72ca24df8fe33ec51a349b25 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
-        // line 2
-        $this->parent = $this->loadTemplate("master.html.twig", "logout.html.twig", 2);
+        // line 1
+        $this->parent = $this->loadTemplate("master.html.twig", "login_success.html.twig", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
@@ -25,23 +25,29 @@ class __TwigTemplate_1075b5c98becc9eb1e9fc80be5c3dc54ee24b669daf3a30193bd3632837
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 4
+    // line 3
     public function block_title($context, array $blocks = array())
     {
-        echo "Logout";
+        echo "Login successful";
     }
 
-    // line 6
+    // line 5
     public function block_content($context, array $blocks = array())
     {
-        // line 7
-        echo "<p>You've been logged out, <a href=\"/\">click to continue</a>.</p>
+        // line 6
+        echo "
+    <div class=\"message\"><br />
+
+    
+
+<p>Login successful, <a href=\"/\">click to continue</a>.</p>
+
 ";
     }
 
     public function getTemplateName()
     {
-        return "logout.html.twig";
+        return "login_success.html.twig";
     }
 
     public function isTraitable()
@@ -51,7 +57,7 @@ class __TwigTemplate_1075b5c98becc9eb1e9fc80be5c3dc54ee24b669daf3a30193bd3632837
 
     public function getDebugInfo()
     {
-        return array (  38 => 7,  35 => 6,  29 => 4,  11 => 2,);
+        return array (  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -64,13 +70,18 @@ class __TwigTemplate_1075b5c98becc9eb1e9fc80be5c3dc54ee24b669daf3a30193bd3632837
 
     public function getSourceContext()
     {
-        return new Twig_Source("{# empty Twig template #}
-{% extends \"master.html.twig\" %}
+        return new Twig_Source("{% extends \"master.html.twig\" %}
 
-{% block title %}Logout{% endblock %}
+{% block title %}Login successful{% endblock %}
 
 {% block content %}
-<p>You've been logged out, <a href=\"/\">click to continue</a>.</p>
-{% endblock %}", "logout.html.twig", "C:\\xampp\\htdocs\\project\\templates\\logout.html.twig");
+
+    <div class=\"message\"><br />
+
+    
+
+<p>Login successful, <a href=\"/\">click to continue</a>.</p>
+
+{% endblock %}", "login_success.html.twig", "C:\\xampp\\htdocs\\project\\templates\\login_success.html.twig");
     }
 }

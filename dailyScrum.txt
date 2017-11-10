@@ -215,26 +215,27 @@ Nov 10,2017 - friday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+tried to figure out the post pagination(not finished yet).
 
 2. what will i do from now until next scrum?
-
+reorganize the css and adapt it to all posible pages.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+need to figure out the next step for a post reply from users.
 
 
 
 
 Lucas
 1. what have i done / not done since last scrum?
-
+I created a category list for display and a post list by categories.
+I modified the categories list with bootstrap but I couldn't make it look the way I wanted. 
 
 2. what will i do from now until next scrum?
-
+I will focus on be able to see the posts by category
 
 3. where do i need help from my teammate, teacher, or internet?
-
+how to make the forms, tables and general layout of the website to look better. 
 
 ---------------------------------
 

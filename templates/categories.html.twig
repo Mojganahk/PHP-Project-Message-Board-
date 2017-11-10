@@ -1,0 +1,30 @@
+{% extends "master.html.twig" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <div>
+
+        {% for c in list %}
+            <div>
+                <div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="{{c.catId}}">
+                            <img class="center-block" src="{{c.imagePath}}" width="200" height="200">
+                        </a>
+                        <h3 class="text-center">{{c.categoryName}}</h3>
+                        <h6 class="text-center">{{c.description}}</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div>
+                <div colspan="6">
+                    <p>You have no categories</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
