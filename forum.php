@@ -544,11 +544,9 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-<<<<<<< HEAD
-    $categoryName = $app->request()->post('categoryName');
-=======
+
     $catId = $app->request()->post('catName');
->>>>>>> 03b790220ab64c44f54426ecb54f382d39182b34
+
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
@@ -577,13 +575,10 @@ $app->post('/addpost', function() use ($app, $log) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-<<<<<<< HEAD
-        DB::insert('posts', $values);
 
-=======
         DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
         
->>>>>>> 03b790220ab64c44f54426ecb54f382d39182b34
+
         $app->render('post_addedit_success.html.twig');
     }
 });
