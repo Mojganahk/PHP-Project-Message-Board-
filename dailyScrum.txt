@@ -215,13 +215,13 @@ Nov 10,2017 - friday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+tried to figure out the post pagination(not finished yet).
 
 2. what will i do from now until next scrum?
-
+reorganize the css and adapt it to all posible pages.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+need to figure out the next step for a post reply from users.
 
 
 
