@@ -556,9 +556,21 @@ $app->get('/categories', function() use ($app) {
     }
     //
     $categoriesList = DB::query("SELECT categoryName, description, imagePath FROM categories");
-    $app->render('admin/categories_list.html.twig', array('list' => $categoriesList));
+    $app->render('/categories.html.twig', array('list' => $categoriesList));
 });
 //-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
+
+//-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
+$app->get('/posts', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    //
+    $postList = DB::query("SELECT title, body FROM posts");
+    $app->render('/post_list_by_category.html.twig', array('list' => $postList));
+});
+//-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
 
 
 
