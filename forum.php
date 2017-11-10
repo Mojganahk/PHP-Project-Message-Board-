@@ -455,23 +455,12 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-
-
-  
-
-
     $catId = $app->request()->post('catName');
-
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
-    $values = array('categoryName' => $categoryName, 'title' => $title, 'body' => $body);
+    $values = array('catId' => $catId, 'title' => $title, 'body' => $body);
     $errorList = array();
-    $query = DB::query("SELECT catId, categoryName FROM posts, categories");
-    
-    
-    $id=$row["catId"];  
-    $category = $row["categoryName"];
     
 // title check
     if (strlen($title) < 1 || strlen($title) > 100) {
