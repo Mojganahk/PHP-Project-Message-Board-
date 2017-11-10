@@ -13,11 +13,27 @@
 
                                 <p>Login successful, <a href="/categories">click to continue</a>.</p>
 
+                                
+                                
+                                
+                                
+
                         </div>
+                         {% block UserIDentification %}
+
+                                    {% if userSession %}
+                                        <p>Hello {{ userSession.name }}, You are Logged in.
+                                            You may <a href="/logout">logout</a></p>
+                                        {% else %}
+                                        <p>You're not logged in. You may <a href="/register">Register</a>
+                                            or <a href="/login">Login</a>.</p>
+                                        {% endif %}
+
+                                {% endblock %}
                     </div>
                 </div>
             </div>
               
         </section>
- </div>
+    </div>
     {% endblock %}
