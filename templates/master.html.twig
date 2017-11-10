@@ -2,7 +2,7 @@
 <html lang="en-US" dir="ltr">
 
     <head>
-        <link href="/styles.css" rel="stylesheet">
+      
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +45,7 @@
    
 
 <body>
+    <div>
          <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -76,12 +77,12 @@
         <div class="loader">Loading...</div> 
         
     </div>
-  
+    </div>
 {% block content %}
 
-<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">
-    <div class="main">
-
+<!--<section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="assets/images/section-1.jpg">-->
+   
+<div>
 
       {% block UserIDentification %}
        
@@ -95,12 +96,11 @@
         
     {% endblock %}
 
+</div>
 
 
-
-    </div>
-    
-</section>
+ 
+<!--</section>-->
     
       
 {% endblock %}
