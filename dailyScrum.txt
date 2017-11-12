@@ -256,12 +256,14 @@ Mojgan :
 
 Lucas
 1. what have i done / not done since last scrum?
-
+Posts working properly.
 
 2. what will i do from now until next scrum?
-
+ Need to organize the whole project with topics.
+the user needs to be able to create a topic and atached that topic to the related category, then, be able to see the topics by category.
 
 3. where do i need help from my teammate, teacher, or internet?
+in the connection from the topics to the categories.
 
 
 ---------------------------------
