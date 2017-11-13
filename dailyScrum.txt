@@ -246,7 +246,7 @@ Mojgan :
 
 
 2. what will i do from now until next scrum?
-
+working on threads table and the php codes
 
 3. where do i need help from my teammate, teacher, or internet?
 
@@ -275,7 +275,7 @@ Mojgan :
 
 
 2. what will i do from now until next scrum?
-
+working on threads table and the php codes
 
 3. where do i need help from my teammate, teacher, or internet?
 
