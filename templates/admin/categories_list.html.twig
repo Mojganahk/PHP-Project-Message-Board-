@@ -3,35 +3,52 @@
 {% block title %}Categories list{% endblock %}
 
 {% block content %}
-    <p><a href="/admin/categories/add">Add category</a></p>
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
 
+                
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
 
-    <div >
+                         
+                                <p><a href="/admin/categories/add">Add category</a></p>
 
-        {% for c in list %}
-            <div >
-                <div >
-                    <div class="col-xs-6 col-md-4">
-                        <p>{{loop.index}}</p>
-                        <p>{{c.categoryName}}</p>
-                        <p>{{c.description}}</p>
-                        <p><img class="center-block" src="{{c.imagePath}}" width="200" height="200"></p>
-                        <p>
-                            <a href="/admin/categories/delete/{{c.id}}">Delete</a>
-                            <a href="/admin/categories/edit/{{c.id}}">Edit</a>
-                        </p>
-                    </div>
+                                <div >
+
+                                    {% for c in list %}
+                                        <div >
+                                            <div >
+                                                <div class="col-xs-6 col-md-4">
+                                                    <p>{{loop.index}}</p>
+                                                    <h4>{{c.categoryName}}</h4>
+                                                    <p>{{c.description}}</p>
+                                                    <p><img class="center-block" src="{{c.imagePath}}" width="200" height="200"></p>
+                                                    <p>
+                                                        <a href="/admin/categories/delete/{{c.id}}">Delete</a>
+                                                        <a href="/admin/categories/edit/{{c.id}}">Edit</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div>
+
+                                            <div colspan="6">
+                                                <p>You have no categories</p>
+                                            </div>
+
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                                           
                 </div>
             </div>
-        {% else %}
-            <div>
 
-                <div colspan="6">
-                    <p>You have no categories</p>
-                </div>
-
-            </div>
-        {% endfor %}
-
+        </section>
     </div>
-    {% endblock %}
+
+
+
+{% endblock %}

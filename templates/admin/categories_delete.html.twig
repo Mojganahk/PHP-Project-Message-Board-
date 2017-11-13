@@ -3,6 +3,16 @@
 {% block title %}Confirm delete{% endblock %}
 
 {% block content %}
+        <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
+
+                            <div class="row">
+                             
     <p><b>Are you sure you want to delete this category?</b></p>
     <form action="/admin/categories/list" style="display: inline;">
         <input type="submit" value="Cancel">
@@ -18,6 +28,16 @@
         <p>Description: {{c.description}}</p>
         <img src="{{c.imagePath}}" width="100" height="100">
     </div>
+                            </div>
+                           
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    
+    
 
 
 {% endblock %}

@@ -3,18 +3,44 @@
 
 {% block title %}Forgotten Password{% endblock %}
 
-{% block content %}
 
-    <p>Enter Your Email Below and We will Send you reset Link</p>
-    
-       
-    {% if error %}
-        <p>We weren't able to find email you provided in our records.
-            Try again or <a href="/register">register</a> a new account.
-    {% endif %}
-<form method="post">
-    Email: <input type="email" name="email"><br>
-       <input type="submit" value="Request Reset Email">
-</form>
+
+{% block content %} 
+
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
+
+
+                   
+                </div>
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
+
+
+                            <div>
+                                <p>Enter Your Email Below and We will Send you reset Link</p>
+
+
+                                {% if error %}
+                                    <p>We weren't able to find email you provided in our records.
+                                        Try again or <a href="/register">register</a> a new account.
+                                    {% endif %}
+                                <form method="post">
+                                    Email: <input class="form-control input-lg"    type="email" name="email"><br>
+                                  <!--  <input type="submit" value="Request Reset Email"> -->
+                                     <button class="btn btn-g btn-round btn-lg" type="submit" value="Request Reset Email" >Request Reset Button</button>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
 
 {% endblock %}

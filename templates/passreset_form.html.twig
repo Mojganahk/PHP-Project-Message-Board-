@@ -4,20 +4,45 @@
 
 {% block content %}
 
-    <p>Hi {{name}} ({{email}}),</p>
-    <p>set new password for your account</p>
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
 
-    {% if errorList %}
-        <ul>
-            {% for error in errorList %}
-                <li>{{error}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form method="post">
-        Password: <input type="password" name="pass1"><br>
-        Password (repeated): <input type="password" name="pass2"><br>
-        <input type="submit" value="Set new password">
-    </form>
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
+
+                            <div class="row">
+                                <p>Hi {{name}} ({{email}}),</p>
+                            </div>
+                            <div>
+
+                                <p>set new password for your account</p>
+
+                                {% if errorList %}
+                                    <ul>
+                                        {% for error in errorList %}
+                                            <li>{{error}}</li>
+                                            {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <form method="post">
+                                    Password: <input class="form-control input-lg" type="password" name="pass1"><br>
+                                    Password (repeated): <input class="form-control input-lg" type="password" name="pass2"><br>
+                                   <button class="btn btn-g btn-round btn-lg" type="submit" value="Set new password" >Set new password</button>
+                                    
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+
+
 
 {% endblock %}

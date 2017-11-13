@@ -98,7 +98,7 @@ Nov 6,2017 - monday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-implemented to add and edit post and the verifications.
+passreset urls were fixed.(codes and user interface)
 
 2. what will i do from now until next scrum?
 -I need to review the user interface and CSS part and try to merge it with master.html.
@@ -272,7 +272,7 @@ Nov 12,2017 - sunday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+trying to figure out the implementing the threads
 
 2. what will i do from now until next scrum?
 working on threads table and the php codes
@@ -299,7 +299,7 @@ Nov 13,2017 - monday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+passreset urls were fixed.(codes and user interface)
 
 2. what will i do from now until next scrum?
 

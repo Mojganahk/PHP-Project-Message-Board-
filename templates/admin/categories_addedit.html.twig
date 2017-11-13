@@ -3,21 +3,44 @@
 {% block title %}Category {% if isEditing %}edit{% else %}add{% endif %}{% endblock %}
 
 {% block content %}
-    {% if errorList %}
-        <ul>
-            {% for error in errorList %}
-                <li>{{error}}</li>
-                {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
 
-     <form method="post" enctype="multipart/form-data">
-         
-        Name: <input type="text" name="categoryName" value="{{v.categoryName}}"><br>
-        Description: <textarea name="description">{{v.description}}</textarea><br>
-        <input type="file" name="categoryImage"><br>
-        <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
-        <input type="submit" value="Cancel">
-    </form>
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="callout-text font-alt">
+                        <h4 style="margin-top: 0px; ">
+
+                            <div class="row">
+                               
+                            </div>
+                            <div>
+                                {% if errorList %}
+                                    <ul>
+                                        {% for error in errorList %}
+                                            <li>{{error}}</li>
+                                            {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <form method="post" enctype="multipart/form-data">
+
+                                    Name: <input type="text" name="categoryName" value="{{v.categoryName}}"><br><br>
+                                    Description: <textarea name="description">{{v.description}}</textarea><br><br>
+                                    <input type="file" name="categoryImage"><br>
+                                    <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
+                                    <input type="submit" value="Cancel">
+                                </form>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+
 
 {% endblock %}
