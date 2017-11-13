@@ -312,13 +312,13 @@ Mojgan :
 
 Lucas
 1. what have i done / not done since last scrum?
-
+I still cannot make the logic behind the replies working.
 
 2. what will i do from now until next scrum?
-
+keep working on the replies to the posts.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+replies to the posts. I will try to find another example or ask someone for help.
 
 ---------------------------------
 
