@@ -434,21 +434,40 @@ $app->get('/user/:id', function($id = -1) use($app) {
 ));
 
 // add post first show
-$app->get('/addpost', function() use ($app, $log) {
+$app->get('/posts/:op/(:id)', function($id) use ($app) {
     if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
+        $app->render('/access_denied.html.twig');
         return;
     }
+    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
+        echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
+        return;
+    }
+    if ($id != -1) {
     $RowCategory = DB::query("SELECT DISTINCT id,categoryName FROM categories");
-    
-    $app->render('post_addedit.html.twig', array('RowCategory' => $RowCategory));
-});
+    if (!$RowCategory) {
+            echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
+            return;
+        }
+    } else { // nothing to load from database - adding
+        $RowCategory = array();
+    }
+    $app->render('/post_addedit.html.twig', array('RowCategory' => $RowCategory, 'isEditing' => ($id != -1)));
+})->conditions(array(
+    'op' => '(edit|add)',
+    'id' => '\d+'
+));
 
+       
 // ADD SUBMISSION
-$app->post('/addpost', function() use ($app, $log) {
+$app->post('/posts/:op/(:id)', function($id) use ($app) {
     //if user isnt logged in, deny access
     if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
+        $app->render('/access_denied.html.twig');
+        return;
+    }
+     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
+        echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
         return;
     }
 //extract submission
@@ -472,19 +491,93 @@ $app->post('/addpost', function() use ($app, $log) {
     }
 //
     if ($errorList) { // 3. failed submission
-        $app->render('post_addedit.html.twig', array(
+        $app->render('/post_addedit.html.twig', array(
             'errorList' => $errorList,
+            'isEditing' => ($id != -1),
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
 
         
-        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
+        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body,'isEditing' => ($id != -1)));
         
 
-        $app->render('post_addedit_success.html.twig');
+        $app->render('/post_addedit_success.html.twig');
+    }
+})->conditions(array(
+    'op' => '(edit|add)',
+    'id' => '\d+'
+));
+
+//delete
+$app->get('/posts/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('/access_denied.html.twig');
+        return;
+    }
+    $post = DB::queryFirstRow('SELECT * FROM posts WHERE id=%d', $id);
+    if (!$post) {
+        $app->render('/not_found.html.twig');
+        return;
+    }
+    $app->render('/post_delete.html.twig', array('p' => $post));
+});
+
+$app->post('/posts/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user'] ) {
+        $app->render('/access_denied.html.twig');
+        return;
+    }
+    $confirmed = $app->request()->post('confirmed');
+    if ($confirmed != 'true') {
+        $app->render('/not_found.html.twig');
+        return;
+    }
+    DB::delete('posts', "id=%i", $id);
+    if (DB::affectedRows() == 0) {
+        $app->render('/not_found.html.twig');
+    } else {
+        $app->render('/post_delete_success.html.twig');
     }
 });
+$app->get('/posts/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user'] ) {
+        $app->render('/access_denied.html.twig');
+        return;
+    }
+    $post = DB::queryFirstRow('SELECT * FROM posts WHERE id=%d', $id);
+    if (!$post) {
+        $app->render('/not_found.html.twig');
+        return;
+    }
+    $app->render('/post_delete.html.twig', array('p' => $post));
+});
+
+$app->post('/posts/delete/:id', function($id) use ($app) {
+    if (!$_SESSION['user'] ) {
+        $app->render('/access_denied.html.twig');
+        return;
+    }
+    $confirmed = $app->request()->post('confirmed');
+    if ($confirmed != 'true') {
+        $app->render('/not_found.html.twig');
+        return;
+    }
+    DB::delete('posts', "id=%i", $id);
+    if (DB::affectedRows() == 0) {
+        $app->render('/not_found.html.twig');
+    } else {
+        $app->render('/post_delete_success.html.twig');
+    }
+});
+
+
+
+
+
+
+
+
 
 
 

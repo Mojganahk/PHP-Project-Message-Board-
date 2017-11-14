@@ -302,7 +302,7 @@ Mojgan :
 passreset urls were fixed.(codes and user interface)
 
 2. what will i do from now until next scrum?
-
+try to fix registration profile picture.
 
 3. where do i need help from my teammate, teacher, or internet?
 
@@ -326,11 +326,11 @@ Nov 14,2017 - tuesday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
-
+tried to solve few issues in login and registration
+the add/edit posts was fixed.
 2. what will i do from now until next scrum?
-
-
+adding thread code to web application.
+solving the issues
 3. where do i need help from my teammate, teacher, or internet?
 
 

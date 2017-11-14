@@ -2,6 +2,32 @@
 
 {% block title %}Post delete{% endblock %}
 
-{% block content %}    
-    <p>Product deleted. <a href="/">Click to continue</a>.</p>
+{% block content %} 
+
+    <div class="main showcase-page">
+        <section class="module-extra-small bg-dark">
+            <div class="container">
+                <div class="row">
+
+
+                    {% block UserIDentification %}
+
+                        {% if userSession %}
+                            <p>Hello {{ userSession.name }}, You are Logged in.
+                                You may <a href="/logout">logout</a></p>
+                            {% else %}
+                            <p>You're not logged in. You may <a href="/register">Register</a>
+                                or <a href="/login">Login</a>.</p>
+                            {% endif %}
+
+                    {% endblock %}
+                </div>
+                 <p>Product deleted. <a href="/">Click to continue</a>.</p>
+            
+            </div>
+
+        </section>
+    </div>
+   
+   
 {% endblock %}

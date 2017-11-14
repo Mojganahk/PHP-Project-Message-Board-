@@ -49,8 +49,8 @@
                             </select><br> 
                             Title: <input class="form-control" type="text" name="title" value="{{v.title}}"><br>
                             Body: <textarea  name="area1" cols="20" class="form-control" name="body">{{v.body}}</textarea><br>             
- 
-                            <button class="btn btn-g btn-round btn-lg" type="submit" value="Add post" >Add Post</button>
+                       
+                            <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} post">
                         </form>
                     </div>
 
