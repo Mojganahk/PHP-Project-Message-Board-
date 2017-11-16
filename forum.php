@@ -78,120 +78,112 @@ $app->get('/session', function() {
     print_r($_SESSION);
 });
 
-//-------------------------------login Starts------------------------------------------
-$app->get('/login', function() use ($app) {
-    $app->render('login.html.twig');
-});
 
-$app->post('/login', function() use ($app) {
-    $email = $app->request()->post('email');
-    $pass = $app->request()->post('pass');
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email= %s", $email);
-    $error = false;
-    if (!$row) {
-        $error = true; // user not found
-    } else {
-        if ($row['password'] != $pass) {
-            $error = true; // password invalid
-        }
-    }
-    if ($error) {
-        $app->render('login.html.twig', array('error' => true));
-    } else {
-        unset($row['password']);
-        $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig');
-    }
-});
-//-------------------------------login Ends------------------------------------------
-//-------------------------------logout starts------------------------------------------
-$app->get('/logout', function() use ($app) {
-    $_SESSION['user'] = array();
-    $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
-});
-//-------------------------------logout Ends------------------------------------------
 //------------------------------------Register starts-----------------------------------------
-$app->get('/register', function() use ($app) {
+
+//REGISTRATION FIRST SHOW
+$app->get('/register', function() use($app) {
     $app->render('register.html.twig');
 });
-$app->post('/register', function() use ($app) {
+//
+//REGISTRATION SUBMISSION
+$app->post('/register', function() use ($app, $log) {
+//extract submission
     $name = $app->request()->post('name');
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
-    //
     $values = array('name' => $name, 'email' => $email);
     $errorList = array();
-    //
+//
     if (strlen($name) < 2 || strlen($name) > 50) {
-        $values['name'] = '';
-        array_push($errorList, "Name must be between 2 and 50 characters long");
+        array_push($errorList, "Name must be between 2 and 50 characters.");
+        $value['name'] = '';
     }
+//
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
+        array_push($errorList, "Email must look like a valid email.");
         $values['email'] = '';
-        array_push($errorList, "Email must look like a valid email");
     } else {
         $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
         if ($row) {
+            array_push($errorList, "Email already used.");
             $values['email'] = '';
-            array_push($errorList, "Email already in use");
         }
     }
+//
     if ($pass1 != $pass2) {
         array_push($errorList, "Passwords don't match");
-    } else { // TODO: do a better check for password quality (lower/upper/numbers/special)
-        if (strlen($pass1) < 2 || strlen($pass1) > 50) {
-            array_push($errorList, "Password must be between 2 and 50 characters long");
+    } else {
+        if (strlen($pass1) < 2 || strlen($pass2) > 50) {
+            array_push($errorList, "Password must be between 2 and 50");
         }
     }
-    //    image verification
+//
+//password pattern check
+    if (!preg_match('/[a-z]/', $pass1) || !preg_match('/[a-z]/', $pass1) || !preg_match('/[0-9' . preg_quote("!@#\$%^&*()_-+={}[],.<>;:'\"~`") . ']/', $pass1)) {
+        array_push($errorList, "Password must have at least one lowercase, one uppercase, and one number.");
+    }
+//
+    //POST IMAGE CHECK
     $avatar = array();
     if ($_FILES['avatar']['error'] != UPLOAD_ERR_NO_FILE) {
-        print_r($_FILES);
         $avatar = $_FILES['avatar'];
+        //check for errors
         if ($avatar['error'] != 0) {
-            array_push($errorList, "Error uploading file");
+            array_push($errorList, "Error uploading file.");
             $log->err("Error uploading file: " . print_r($avatar, true));
         } else {
             if (strstr($avatar['name'], '..')) {
                 array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($avatar, true));
+                $log->warn("Uploaded file name with .. in it (possible attack) " . print_r($avatar, true));
             }
-            // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
+            
             $info = getimagesize($avatar["tmp_name"]);
             if ($info == FALSE) {
-                array_push($errorList, "File doesn't look like a valid image");
+                array_push($errorList, "File doesn't look like a valid image.");
             } else {
-                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/gif' || $info['mime'] == 'image/png') {
-                    // image type is valid - all good
+//                //CHECK IMAGE SIZE, 
+                if (filesize($avatar["tmp_name"]) > 200000) {
+                    array_push($errorList, "Image must be smaller than 20kb.");
+                }
+                //CHECK IMAGE DIMENSIONS
+                if ($info[0] > 300 || $info[1] > 300) {
+                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
+                }
+                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif') {
+                    //image type is valid- all good
                 } else {
                     array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
                 }
             }
         }
-    } else { // no file uploaded        
-        array_push($errorList, "Image is required when creating a new member");
+    } else { //no file uploaded
+        array_push($errorList, "Photo must be uploaded with new registration.");
     }
-    //
+
+
     if ($errorList) { // 3. failed submission
         $app->render('register.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
-    } else { // 2. successful submission
-        if ($avatar) {
-            $avatarPath = 'uploads/' . $avatar['name'];
-            if (!move_uploaded_file($avatar['tmp_name'], $avatarPath)) {
-                $log->err("Error moving uploaded file: " . print_r($avatar, true));
-                $app->render('internal_error.html.twig');
+    } else { //2. successful submission
+        if ($avatar) { //   '[^a-zA-Z0-9_\.-]' 
+          //  $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $profileImage['name']); Greg's code but he never checked it, doesn't work
+            $imagePath = 'uploads/' . $avatar['name'];  // 
+            if (!move_uploaded_file($avatar['tmp_name'], $imagePath)) {
+                $log->err(sprintf("Error moving uploaded file: " . print_r($avatar, true)));
+                $app->render('error_internal.html.twig');
                 return;
-                // import image
             }
-            // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $avatarPath = "/" . $avatarPath;
+            //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
+            $values['avatarPath'] = "/" . $imagePath;
         }
+//encrypted password
         $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc, 'avatarPath' => $avatarPath));
-        $app->render('register_success.html.twig');
+        $values['password'] = $passEnc;
+        DB::insert('users', $values);
+        $app->render('register_success.html.twig', $values);
     }
 });
 
@@ -204,22 +196,24 @@ $app->get('/isemailregistered/:email', function($email) use ($app) {
     echo!$row ? "" : '<span style="background-color: red; font-weight: bold;">Email already taken</span>';
 });
 //-------------------------------email ends------------------------------------------
-//
 //-------------------------------login Starts------------------------------------------
 $app->get('/login', function() use ($app) {
     $app->render('login.html.twig');
 });
 
 $app->post('/login', function() use ($app) {
+//extract data
     $email = $app->request()->post('email');
-    $pass = $app->request()->post('pass');
+    $password = $app->request()->post('password');
+
     $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
     $error = false;
+
     if (!$row) {
-        $error = true; // user not found
-    } else {
-        if ($row['password'] != $pass) {
-            $error = true; // password invalid
+        $error = true; //user not found
+    } else { //password verify
+        if (!password_verify($password, $row['password'])) { //password failed
+            $error = true;
         }
     }
     if ($error) {
@@ -227,15 +221,19 @@ $app->post('/login', function() use ($app) {
     } else {
         unset($row['password']);
         $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig');
+        $app->render('login_success.html.twig', array('userSession' => $_SESSION['user'], 'email' => $email));
     }
 });
 
+//check logged in users
+$app->get('/session', function() {
+    print_r($_SESSION);
+});
 //-------------------------------login Ends------------------------------------------
 //-------------------------------logout starts------------------------------------------
 $app->get('/logout', function() use ($app) {
     $_SESSION['user'] = array();
-    $app->render('logout.html.twig');
+    $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
 });
 //-------------------------------logout Ends------------------------------------------
 //--------------------------------Admin - categories-------------------------------
