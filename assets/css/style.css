@@ -2943,3 +2943,10 @@ body {background: #EAEAEA;}
  .user-info-block .user-body {float: left; padding: 5%; width: 90%;}
   .user-body .tab-content > div { text-align: center; float: left; width: 100%;}
   .user-body .tab-content h4 {text-align: center;width: 100%; margin: 10px 0; color: #333;}
+  
+  /*post for newposts */
+  .post { border-bottom:1px solid #DDD }
+.post-title {  color:#662D91; }
+.post .glyphicon { margin-right:5px; }
+.post-header-line { border-top:1px solid #DDD;border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
+.post-content { padding-bottom: 15px;padding-top: 15px;}

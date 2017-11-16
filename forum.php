@@ -258,6 +258,8 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
     }
     $skip = ($page - 1) * $perPage;
     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+  
+      // $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
     $app->render('newposts.html.twig', array(
         "postsList" => $postList,
         "maxPages" => $maxPages
@@ -277,7 +279,9 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+   
+     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d ", $skip, $perPage);
+   
     $app->render('newposts.html.twig', array(
         "postList" => $postList,
         "maxPages" => $maxPages,
@@ -286,7 +290,7 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
 });
 // posts pagination usinx AJAX - just the table of post
 $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
-    $perPage = 4;
+    $perPage = 3;
     $totalCount = DB::queryFirstField("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
@@ -312,17 +316,17 @@ $app->get('/categories', function() use ($app) {
     $app->render('/categories.html.twig', array('list' => $categoriesList));
 });
 //-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
-//-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
-$app->get('/posts', function() use ($app) {
-    if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    //
-    $postList = DB::query("SELECT title, body FROM posts");
-    $app->render('/newposts.html.twig', array('list' => $postList));
-});
-//-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
+////-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
+//$app->get('/posts', function() use ($app) {
+//    if (!$_SESSION['user']) {
+//        $app->render('access_denied.html.twig');
+//        return;
+//    }
+//    //
+//    $postList = DB::query("SELECT title, body FROM posts");
+//    $app->render('/newposts.html.twig', array('list' => $postList));
+//});
+////-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
 
 
 
