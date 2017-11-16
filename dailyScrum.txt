@@ -393,13 +393,13 @@ Mojgan :
 
 Lucas
 1. what have i done / not done since last scrum?
-
+fixed a problem with the login part. (users couldn't login if the password was encrypted)
 
 2. what will i do from now until next scrum?
-
+display a list of posts according to each category selection.
 
 3. where do i need help from my teammate, teacher, or internet?
-
+how to display a list of posts according to each category selection.
 
 ---------------------------------
 
