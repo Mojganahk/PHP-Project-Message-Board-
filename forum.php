@@ -313,7 +313,7 @@ $app->get('/categories', function() use ($app) {
     $app->render('/categories.html.twig', array('list' => $categoriesList));
 });
 //-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
-<<<<<<< HEAD
+
 ////-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
 //$app->get('/posts', function() use ($app) {
 //    if (!$_SESSION['user']) {
@@ -325,7 +325,7 @@ $app->get('/categories', function() use ($app) {
 //    $app->render('/newposts.html.twig', array('list' => $postList));
 //});
 ////-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
-=======
+
 
 //-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
 $app->get('/posts', function() use ($app) {
@@ -338,7 +338,7 @@ $app->get('/posts', function() use ($app) {
     $app->render('/newposts.html.twig', array('list' => $postList));
 });
 //-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
->>>>>>> 5d033b89d960be089388daabc20854992e54aa2d
+
 
 
 
