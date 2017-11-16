@@ -71,9 +71,9 @@ $twig->addGlobal('userSession', $_SESSION['user']);
 //index
 
 
-$app->get('/session', function() {
-    print_r($_SESSION);
-});
+//$app->get('/session', function() {
+//    print_r($_SESSION);
+//});
 
 
 //--------------------------------------Post starts--------------------------------------
