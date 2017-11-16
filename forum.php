@@ -66,7 +66,10 @@ $twig->addGlobal('userSession', $_SESSION['user']);
 
 
 //eventhandlers:
+
+
 //index
+
 
 $app->get('/session', function() {
     print_r($_SESSION);
@@ -74,6 +77,7 @@ $app->get('/session', function() {
 
 
 //--------------------------------------Post starts--------------------------------------
+
 //INDEX 
 //load to main page when nothing entered
 $app->get('/', function($term = null) use ($app) {
@@ -107,7 +111,6 @@ $app->get('/user/:id', function($id = -1) use($app) {
 })->conditions(array(
     'id' => '\d+'
 ));
-
 // add post first show
 $app->get('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     if (!$_SESSION['user']) {
@@ -131,7 +134,6 @@ $app->get('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     'id' => '\d+'
 ));
 
-
 // ADD SUBMISSION
 $app->post('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     //if user isnt logged in, deny access
@@ -151,7 +153,7 @@ $app->post('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
 //
     $values = array('catId' => $catId, 'title' => $title, 'body' => $body);
     $errorList = array();
-
+    
 // title check
     if (strlen($title) < 1 || strlen($title) > 100) {
         array_push($errorList, "Title must be between 1 and 100 characters.");
@@ -171,15 +173,12 @@ $app->post('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     } else { //2. successful submission
 //INSERT STATEMENT
         DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
-
-
         $app->render('/post_addedit_success.html.twig');
     }
 })->conditions(array(
     'op' => '(edit|add)',
     'id' => '\d+'
 ));
-
 //delete
 $app->get('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
@@ -193,7 +192,6 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     }
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
-
 $app->post('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
@@ -223,7 +221,6 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     }
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
-
 $app->post('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
@@ -244,8 +241,8 @@ $app->post('/posts/delete/:id', function($id) use ($app) {
 
 
 
-
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
+
 // URL/event handlers go here
 $app->get('/posts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
@@ -267,7 +264,6 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
 })->conditions(array(
     'page' => '\d+'
 ));
-
 // posts pagination usinx AJAX - main page
 $app->get('/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
@@ -305,6 +301,7 @@ $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     ));
 });
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
+
 //-------------------------------------------------- CATEGORY LIST STARTS ---------------------------------------------------------
 $app->get('/categories', function() use ($app) {
     if (!$_SESSION['user']) {
@@ -316,6 +313,7 @@ $app->get('/categories', function() use ($app) {
     $app->render('/categories.html.twig', array('list' => $categoriesList));
 });
 //-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
+<<<<<<< HEAD
 ////-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
 //$app->get('/posts', function() use ($app) {
 //    if (!$_SESSION['user']) {
@@ -327,6 +325,20 @@ $app->get('/categories', function() use ($app) {
 //    $app->render('/newposts.html.twig', array('list' => $postList));
 //});
 ////-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
+=======
+
+//-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
+$app->get('/posts', function() use ($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    //
+    $postList = DB::query("SELECT title, body FROM posts");
+    $app->render('/newposts.html.twig', array('list' => $postList));
+});
+//-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
+>>>>>>> 5d033b89d960be089388daabc20854992e54aa2d
 
 
 
