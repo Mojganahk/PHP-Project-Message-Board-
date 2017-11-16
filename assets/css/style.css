@@ -158,6 +158,7 @@ a,
   position: relative;
   background-color: #fff;
   z-index: 1;
+  height: 850px;
 }
 
 .module,
@@ -2925,3 +2926,20 @@ Google map
     width: 100%;
   }
 }
+
+
+/*profile picture*/
+body {background: #EAEAEA;}
+.user-details {position: relative; padding: 0;}
+.user-details .user-image {position: relative;  z-index: 1; width: 100%; text-align: center;}
+ .user-image img { clear: both; margin: auto; position: relative;}
+
+.user-details .user-info-block {width: 100%; height: 100px; position: absolute;  background:lightgray; z-index: 0;}
+ .user-info-block .user-heading {width: 100%; text-align: center; margin: 10px 0 0;}
+ .user-info-block .navigation { text-align: center; background:whitesmoke; float: left; width: 100%; margin: 0; padding: 0; list-style: none; border-bottom: 1px solid #428BCA; border-top: 1px solid #428BCA;}
+  .navigation li {float: left; margin: 0; padding: 0;}
+   .navigation li a {padding: 20px 30px; float: left;}
+   .navigation li.active a {background: #428BCA; color: #fff;}
+ .user-info-block .user-body {float: left; padding: 5%; width: 90%;}
+  .user-body .tab-content > div { text-align: center; float: left; width: 100%;}
+  .user-body .tab-content h4 {text-align: center;width: 100%; margin: 10px 0; color: #333;}

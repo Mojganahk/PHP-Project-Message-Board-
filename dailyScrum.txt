@@ -380,10 +380,11 @@ Nov 16,2017 - thursday
 
 Mojgan :
 1. what have i done / not done since last scrum?
-
+I tried to put profile picture after registration.
+registration completed.
 
 2. what will i do from now until next scrum?
-
+put profile picture in layout.
 
 3. where do i need help from my teammate, teacher, or internet?
 

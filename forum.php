@@ -69,346 +69,27 @@ $twig->addGlobal('userSession', $_SESSION['user']);
 
 
 //index
-$app->get('/', function() use ($app) {
-    $app->render('index.html.twig');
-});
 
 
 $app->get('/session', function() {
     print_r($_SESSION);
 });
-
-
-//------------------------------------Register starts-----------------------------------------
-
-//REGISTRATION FIRST SHOW
-$app->get('/register', function() use($app) {
-    $app->render('register.html.twig');
-});
-//
-//REGISTRATION SUBMISSION
-$app->post('/register', function() use ($app, $log) {
-//extract submission
-    $name = $app->request()->post('name');
-    $email = $app->request()->post('email');
-    $pass1 = $app->request()->post('pass1');
-    $pass2 = $app->request()->post('pass2');
-    $values = array('name' => $name, 'email' => $email);
-    $errorList = array();
-//
-    if (strlen($name) < 2 || strlen($name) > 50) {
-        array_push($errorList, "Name must be between 2 and 50 characters.");
-        $value['name'] = '';
-    }
-//
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
-        array_push($errorList, "Email must look like a valid email.");
-        $values['email'] = '';
-    } else {
-        $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-        if ($row) {
-            array_push($errorList, "Email already used.");
-            $values['email'] = '';
-        }
-    }
-//
-    if ($pass1 != $pass2) {
-        array_push($errorList, "Passwords don't match");
-    } else {
-        if (strlen($pass1) < 2 || strlen($pass2) > 50) {
-            array_push($errorList, "Password must be between 2 and 50");
-        }
-    }
-//
-//password pattern check
-    if (!preg_match('/[a-z]/', $pass1) || !preg_match('/[a-z]/', $pass1) || !preg_match('/[0-9' . preg_quote("!@#\$%^&*()_-+={}[],.<>;:'\"~`") . ']/', $pass1)) {
-        array_push($errorList, "Password must have at least one lowercase, one uppercase, and one number.");
-    }
-//
-    //POST IMAGE CHECK
-    $avatar = array();
-    if ($_FILES['avatar']['error'] != UPLOAD_ERR_NO_FILE) {
-        $avatar = $_FILES['avatar'];
-        //check for errors
-        if ($avatar['error'] != 0) {
-            array_push($errorList, "Error uploading file.");
-            $log->err("Error uploading file: " . print_r($avatar, true));
-        } else {
-            if (strstr($avatar['name'], '..')) {
-                array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack) " . print_r($avatar, true));
-            }
-            
-            $info = getimagesize($avatar["tmp_name"]);
-            if ($info == FALSE) {
-                array_push($errorList, "File doesn't look like a valid image.");
-            } else {
-//                //CHECK IMAGE SIZE, 
-                if (filesize($avatar["tmp_name"]) > 200000) {
-                    array_push($errorList, "Image must be smaller than 20kb.");
-                }
-                //CHECK IMAGE DIMENSIONS
-                if ($info[0] > 300 || $info[1] > 300) {
-                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
-                }
-                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif') {
-                    //image type is valid- all good
-                } else {
-                    array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
-                }
-            }
-        }
-    } else { //no file uploaded
-        array_push($errorList, "Photo must be uploaded with new registration.");
-    }
-
-
-    if ($errorList) { // 3. failed submission
-        $app->render('register.html.twig', array(
-            'errorList' => $errorList,
-            'v' => $values));
-    } else { //2. successful submission
-        if ($avatar) { //   '[^a-zA-Z0-9_\.-]' 
-          //  $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $profileImage['name']); Greg's code but he never checked it, doesn't work
-            $imagePath = 'uploads/' . $avatar['name'];  // 
-            if (!move_uploaded_file($avatar['tmp_name'], $imagePath)) {
-                $log->err(sprintf("Error moving uploaded file: " . print_r($avatar, true)));
-                $app->render('error_internal.html.twig');
-                return;
-            }
-            //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $values['avatarPath'] = "/" . $imagePath;
-        }
-//encrypted password
-        $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        $values['password'] = $passEnc;
-        DB::insert('users', $values);
-        $app->render('register_success.html.twig', $values);
-    }
-});
-
-
-//----------------------------------register ends----------------------------------------------
-//
-//-------------------------------this Email registered alreardy------------------------------------------
-$app->get('/isemailregistered/:email', function($email) use ($app) {
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-    echo!$row ? "" : '<span style="background-color: red; font-weight: bold;">Email already taken</span>';
-});
-//-------------------------------email ends------------------------------------------
-//-------------------------------login Starts------------------------------------------
-$app->get('/login', function() use ($app) {
-    $app->render('login.html.twig');
-});
-
-$app->post('/login', function() use ($app) {
-//extract data
-    $email = $app->request()->post('email');
-    $password = $app->request()->post('password');
-
-    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-    $error = false;
-
-    if (!$row) {
-        $error = true; //user not found
-    } else { //password verify
-        if (!password_verify($password, $row['password'])) { //password failed
-            $error = true;
-        }
-    }
-    if ($error) {
-        $app->render('login.html.twig', array('error' => true));
-    } else {
-        unset($row['password']);
-        $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig', array('userSession' => $_SESSION['user'], 'email' => $email));
-    }
-});
-
-//check logged in users
-$app->get('/session', function() {
-    print_r($_SESSION);
-});
-//-------------------------------login Ends------------------------------------------
-//-------------------------------logout starts------------------------------------------
-$app->get('/logout', function() use ($app) {
-    $_SESSION['user'] = array();
-    $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
-});
-//-------------------------------logout Ends------------------------------------------
-//--------------------------------Admin - categories-------------------------------
-$app->get('/admin/categories/list', function() use ($app) {
-    if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    //
-    $categoriesList = DB::query("SELECT * FROM categories");
-    $app->render('admin/categories_list.html.twig', array('list' => $categoriesList));
-});
-$app->get('/admin/categories/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    $categories = DB::queryFirstRow('SELECT * FROM categories WHERE id=%d', $id);
-    if (!$categories) {
-        $app->render('admin/not_found.html.twig');
-        return;
-    }
-    $app->render('admin/categories_delete.html.twig', array('c' => $categories));
-});
-$app->post('/admin/categories/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    $confirmed = $app->request()->post('confirmed');
-    if ($confirmed != 'true') {
-        $app->render('admin/not_found.html.twig');
-        return;
-    }
-    DB::delete('categories', "id=%i", $id);
-    if (DB::affectedRows() == 0) {
-        $app->render('admin/not_found.html.twig');
-    } else {
-        $app->render('admin/categories_delete_success.html.twig');
-    }
-});
-$app->get('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app) {
-    if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
-        echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
-        return;
-    }
-    //
-    if ($id != -1) {
-        $values = DB::queryFirstRow('SELECT * FROM categories WHERE id=%i', $id);
-        if (!$values) {
-            echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
-            return;
-        }
-    } else { // nothing to load from database - adding
-        $values = array();
-    }
-    $app->render('admin/categories_addedit.html.twig', array(
-        'v' => $values,
-        'isEditing' => ($id != -1)
-    ));
-})->conditions(array(
-    'op' => '(edit|add)',
-    'id' => '\d+'
-));
-
-$app->post('/admin/categories/:op(/:id)', function($op, $id = -1) use ($app, $log) {
-    if (!$_SESSION['user'] || $_SESSION['user']['role'] != 'admin') {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
-        echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
-        return;
-    }
-    //
-    $categoryName = $app->request()->post('categoryName');
-    $description = $app->request()->post('description');
-    //
-    $values = array('categoryName' => $categoryName, 'description' => $description);
-    $errorList = array();
-    //
-    if (strlen($categoryName) < 2 || strlen($categoryName) > 20) {
-        $values['categoryName'] = '';
-        array_push($errorList, "categoryName must be between 2 and 20 characters long");
-    }
-    if (strlen($description) < 2 || strlen($description) > 100) {
-        $values['description'] = '';
-        array_push($errorList, "Description must be between 2 and 100 characters long");
-    }
-
-    $categoryImage = array();
-    ///////////////////
-    if ($_FILES['categoryImage']['error'] != UPLOAD_ERR_NO_FILE) {
-        $categoryImage = $_FILES['categoryImage'];
-        if ($categoryImage['error'] != 0) {
-            array_push($errorList, "Error uploading file");
-            $log->err("Error uploading file: " . print_r($categoryImage, true));
-        } else {
-            if (strstr($categoryImage['name'], '..')) {
-                array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($categoryImage, true));
-            }
-            // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
-            $info = getimagesize($categoryImage["tmp_name"]);
-            if ($info == FALSE) {
-                array_push($errorList, "File doesn't look like a valid image");
-            } else {
-                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/gif' || $info['mime'] == 'image/png') {
-                    // image type is valid - all good
-                } else {
-                    array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
-                }
-            }
-        }
-    } else { // no file uploaded
-        if ($op == 'add') {
-            array_push($errorList, "Image is required when creating new category");
-        }
-    }
-    //
-    if ($errorList) { // 3. failed submission
-        $app->render('admin/categories_addedit.html.twig', array(
-            'errorList' => $errorList,
-            'isEditing' => ($id != -1),
-            'v' => $values));
-    } else { // 2. successful submission
-        if ($categoryImage) {
-            $imagePath = 'uploads/' . $categoryImage['name'];
-            if (!move_uploaded_file($categoryImage['tmp_name'], $imagePath)) {
-                $log->err("Error moving uploaded file: " . print_r($categoryImage, true));
-                $app->render('internal_error.html.twig');
-                return;
-            }
-            // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
-            $values['imagePath'] = "/" . $imagePath;
-        }
-        if ($id != -1) {
-            DB::update('categories', $values, "id=%i", $id);
-        } else {
-            DB::insert('categories', $values);
-        }
-        $app->render('admin/categories_addedit_success.html.twig', array('isEditing' => ($id != -1)));
-    }
-})->conditions(array(
-    'op' => '(edit|add)',
-    'id' => '\d+'
-));
-
-//--------------------------------------admin ends--------------------------------------
 
 
 //--------------------------------------Post starts--------------------------------------
 
 //INDEX 
 //load to main page when nothing entered
-$app->get('/(:term)', function($term = null) use ($app) {
-    if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
-        return;
-    } 
-    if(!isset($_GET['search'])){
-    $postList = DB::query("SELECT name, title, body, datePosted, posts.id as id, users.id as userId FROM posts, users WHERE posts.authorId=users.id");
-    $app->render('index.html.twig', array('list' => $postList));
+$app->get('/', function($term = null) use ($app) {
+    if (!isset($_GET['search'])) {
+        $postList = DB::query("SELECT name, title, body, datePosted, posts.id as id, users.id as userId FROM posts, users WHERE posts.authorId=users.id");
+        $app->render('index.html.twig', array('list' => $postList));
     } else {
         $term = $app->request()->get('search');
-         $postList = DB::query("SELECT name, title, body, datePosted, posts.id as id, users.id as userId FROM posts, users WHERE posts.authorId=users.id AND title LIKE '%$term%' OR body LIKE '%$term%' AND posts.authorId=users.id");
-         $app->render('index.html.twig', array('list' => $postList));
+        $postList = DB::query("SELECT name, title, body, datePosted, posts.id as id, users.id as userId FROM posts, users WHERE posts.authorId=users.id AND title LIKE '%$term%' OR body LIKE '%$term%' AND posts.authorId=users.id");
+        $app->render('index.html.twig', array('list' => $postList));
     }
-})->conditions(array(
-    'term' => '\w'
-));
+});
 //
 //
 //
@@ -431,7 +112,7 @@ $app->get('/user/:id', function($id = -1) use($app) {
     'id' => '\d+'
 ));
 // add post first show
-$app->get('/posts/:op/(:id)', function($id) use ($app) {
+$app->get('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
         return;
@@ -440,35 +121,33 @@ $app->get('/posts/:op/(:id)', function($id) use ($app) {
         echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
         return;
     }
-    if ($id != -1) {
-    $RowCategory = DB::query("SELECT DISTINCT id,categoryName FROM categories");
-    if (!$RowCategory) {
-            echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
-            return;
-        }
-    } else { // nothing to load from database - adding
-        $RowCategory = array();
+    $catList = DB::query("SELECT id, categoryName FROM categories");
+    if (!$catList) {
+        // internal error display!
+        echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
+        return;
     }
-    $app->render('/post_addedit.html.twig', array('RowCategory' => $RowCategory, 'isEditing' => ($id != -1)));
+    print_r($catList);
+    $app->render('/post_addedit.html.twig', array('catList' => $catList, 'isEditing' => ($id != -1)));
 })->conditions(array(
     'op' => '(edit|add)',
     'id' => '\d+'
 ));
-       
+
 // ADD SUBMISSION
-$app->post('/posts/:op/(:id)', function($id) use ($app) {
+$app->post('/posts/:op(/:id)', function($op, $id = -1) use ($app) {
     //if user isnt logged in, deny access
     if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
         return;
     }
-     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
+    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
         echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
         return;
     }
 //extract submission
     $authorId = $_SESSION['user']['id'];
-    $catId = $app->request()->post('catName');
+    $catId = $app->request()->post('catId');
     $title = $app->request()->post('title');
     $body = $app->request()->post('body');
 //
@@ -493,9 +172,7 @@ $app->post('/posts/:op/(:id)', function($id) use ($app) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-        
-        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body,'isEditing' => ($id != -1)));
-        
+        DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body));
         $app->render('/post_addedit_success.html.twig');
     }
 })->conditions(array(
@@ -516,7 +193,7 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
 $app->post('/posts/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user'] ) {
+    if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
         return;
     }
@@ -533,7 +210,7 @@ $app->post('/posts/delete/:id', function($id) use ($app) {
     }
 });
 $app->get('/posts/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user'] ) {
+    if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
         return;
     }
@@ -545,7 +222,7 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
 $app->post('/posts/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user'] ) {
+    if (!$_SESSION['user']) {
         $app->render('/access_denied.html.twig');
         return;
     }
@@ -569,7 +246,7 @@ $app->post('/posts/delete/:id', function($id) use ($app) {
 // URL/event handlers go here
 $app->get('/posts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
+    $totalCount = DB::queryFirstField("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -581,13 +258,14 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
     $app->render('newposts.html.twig', array(
         "postsList" => $postList,
         "maxPages" => $maxPages
-        ));
-});
-
+    ));
+})->conditions(array(
+    'page' => '\d+'
+));
 // posts pagination usinx AJAX - main page
 $app->get('/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
+    $totalCount = DB::queryFirstField("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -600,12 +278,12 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
         "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
-        ));
+    ));
 });
 // posts pagination usinx AJAX - just the table of post
 $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 4;
-    $totalCount = DB::queryFirstField ("SELECT COUNT(*) AS count FROM posts");
+    $totalCount = DB::queryFirstField("SELECT COUNT(*) AS count FROM posts");
     $maxPages = ($totalCount + $perPage - 1) / $perPage;
     if ($page > $maxPages) {
         http_response_code(404);
@@ -616,7 +294,7 @@ $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
     $app->render('ajaxnewposts.html.twig', array(
         "postList" => $postList,
-        ));
+    ));
 });
 //-------------------------------------------------POST PAGINATION-----------------------------------------------------------------
 

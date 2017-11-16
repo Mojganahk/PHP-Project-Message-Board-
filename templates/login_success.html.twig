@@ -7,33 +7,59 @@
         <section class="module-extra-small bg-dark">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 col-md-8 col-lg-9">
-                        <div class="callout-text font-alt">
-                            <h4 style="margin-top: 0px; ">
+                    <div class="col-sm-6 col-md-10 col-lg-12 user-details">
 
-                                <p>Login successful, <a href="/categories">click to continue</a>.</p>
+                      
+                        {% block UserIDentification %}
 
-                                
-                                
-                                
-                                
+                            {% if userSession %}
+                                <p>Hello {{ userSession.name }}, You are Logged in.
+                                    You may <a href="/logout">logout</a></p>
+                                {% else %}
+                                <p>You're not logged in. You may <a href="/register">Register</a>
+                                    or <a href="/login">Login</a>.</p>
+                                {% endif %}
 
+                        {% endblock %}
+
+                        <!--piccccccccccccccccccc-->
+
+                        <div class="user-image">
+                            <img src="{{ userSession.avatarPath }}" alt="Profile Picture" title="Profile Picture" class="img-circle">
                         </div>
-                         {% block UserIDentification %}
+                        <div class="user-info-block">
+                            <div class="user-heading">
+                                <h2>{{ userSession.name }}</h2>
+                                <span class="help-block" href="../mailto:name@email.com">{{ userSession.email }}</span>
+                           
+                            <ul class="navigation">
+                                <li class="active">
+                                    <a data-toggle="tab" href="../mailto:name@email.com" title="Email">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="../newposts" title="Posts">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </a>
 
-                                    {% if userSession %}
-                                        <p>Hello {{ userSession.name }}, You are Logged in.
-                                            You may <a href="/logout">logout</a></p>
-                                        {% else %}
-                                        <p>You're not logged in. You may <a href="/register">Register</a>
-                                            or <a href="/login">Login</a>.</p>
-                                        {% endif %}
+                                </li>
 
-                                {% endblock %}
+                                <li>
+                                    <a data-toggle="tab" href="../categories" title="Categories">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                     </div>
+                        </div>
                     </div>
+
+                    <!---piccccccccccccccccccc end-->
                 </div>
             </div>
-              
-        </section>
     </div>
-    {% endblock %}
+
+</section>
+</div>
+{% endblock %}
