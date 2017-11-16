@@ -9,27 +9,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-md-8 col-lg-9">
-                        <div class="callout-text font-alt">
+                     
                             <h4 style="margin-top: 0px; ">
 
-                                <p>You've been registered. You may now <a href="/login">login</a>.
+                                <p>You've been registered successfully. You may now <a href="/login">login</a>.
 
-                                    </div>
-                                    {% block UserIDentification %}
-
-                                        {% if userSession %}
-                                        <p>Hello {{ userSession.name }}, You are Logged in.
-                                            You may <a href="/logout">logout</a>  </p>
-                                        <div class="col-xs-6 col-md-4">
-                                       <img class="center-block" src="{{u.avatarPath}}" width="100" height="100">
-                                        
-                                        </div>
-                                    {% else %}
-                                        <p>You're not logged in. You may <a href="/register">Register</a>
-                                            or <a href="/login">Login</a>.</p>
-                                        {% endif %}
-
-                                {% endblock %}
+                                  
 
                         </div>
                     </div>
