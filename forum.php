@@ -430,7 +430,6 @@ $app->get('/user/:id', function($id = -1) use($app) {
 })->conditions(array(
     'id' => '\d+'
 ));
-
 // add post first show
 $app->get('/posts/:op/(:id)', function($id) use ($app) {
     if (!$_SESSION['user']) {
@@ -455,7 +454,6 @@ $app->get('/posts/:op/(:id)', function($id) use ($app) {
     'op' => '(edit|add)',
     'id' => '\d+'
 ));
-
        
 // ADD SUBMISSION
 $app->post('/posts/:op/(:id)', function($id) use ($app) {
@@ -495,18 +493,15 @@ $app->post('/posts/:op/(:id)', function($id) use ($app) {
             'v' => $values));
     } else { //2. successful submission
 //INSERT STATEMENT
-
         
         DB::insert('posts', array('authorId' => $authorId, 'catId' => $catId, 'title' => $title, 'body' => $body,'isEditing' => ($id != -1)));
         
-
         $app->render('/post_addedit_success.html.twig');
     }
 })->conditions(array(
     'op' => '(edit|add)',
     'id' => '\d+'
 ));
-
 //delete
 $app->get('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
@@ -520,7 +515,6 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     }
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
-
 $app->post('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user'] ) {
         $app->render('/access_denied.html.twig');
@@ -550,7 +544,6 @@ $app->get('/posts/delete/:id', function($id) use ($app) {
     }
     $app->render('/post_delete.html.twig', array('p' => $post));
 });
-
 $app->post('/posts/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user'] ) {
         $app->render('/access_denied.html.twig');
@@ -568,14 +561,6 @@ $app->post('/posts/delete/:id', function($id) use ($app) {
         $app->render('/post_delete_success.html.twig');
     }
 });
-
-
-
-
-
-
-
-
 
 
 
