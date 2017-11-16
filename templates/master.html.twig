@@ -70,19 +70,27 @@
                                 </li>
                                 <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Posts</a>
                                   <ul class="dropdown-menu">
+                                      {% if userSession %}
                                     <li><a href="/posts/add"> Add Your Post  </a></li>
+                                    {% endif %}
                                     <li><a href="/newposts">All Posts</a></li>
                                   </ul>
                                 </li>
-                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Login</a>
+                                {% if userSession %}
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Session</a>
                                     <ul class="dropdown-menu">
-
-                                        <li><a href="/login"> Login  </a></li>
-                                        <li><a href="/register">Register</a></li>
-                                         <li><a href="/logout">Logout</a></li>
-                                     
+                                         <li><a href="/logout">Logout</a></li>                                     
                                     </ul>
                                 </li>
+                                {% else %}
+                                <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Session</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/login"> Login  </a></li>
+                                        <li><a href="/register">Register</a></li>
+                                        <li><a href="/passreset/request">Recover password</a></li>
+                                    </ul>
+                                </li>
+                                {% endif %}
                                     <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Contact Us</a>
                                     <ul class="dropdown-menu">
 

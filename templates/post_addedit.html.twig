@@ -42,13 +42,13 @@
                     {% endif %}
                     <div>
                         <form  class="form" method="post" enctype="multipart/form-data">
-                            Category:<select   name="catName" >
-                                {% for rc in RowCategory %}
-                                    <option value="{{rc.id}}" >{{rc.categoryName}}</option>
-                                {%endfor%}
+                            Category:<select name="catId">
+                                {% for cat in catList %}
+                                    <option value="{{cat.id}}" >{{cat.categoryName}}</option>
+                                {%endfor %}
                             </select><br> 
                             Title: <input class="form-control" type="text" name="title" value="{{v.title}}"><br>
-                            Body: <textarea  name="area1" cols="20" class="form-control" name="body">{{v.body}}</textarea><br>             
+                            Body: <textarea cols="20" class="form-control" name="body">{{v.body}}</textarea><br>             
                        
                             <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} post">
                         </form>
