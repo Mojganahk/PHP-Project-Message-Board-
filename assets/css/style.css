@@ -1,17 +1,26 @@
 /*--------------------------------------------------------------
 	Common
 --------------------------------------------------------------*/
+*{
+ margin:auto;
+}
 html {
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
   -ms-overflow-style: scrollbar;
+  height: auto;
+
 }
 
+
+
 body {
-  background: #fff;
+  background: red;
   font: 400 12px/1.8 "Open Sans", sans-serif;
   color: #666;
   -webkit-font-smoothing: antialiased;
+  height: auto;
+
 }
 
 img {
@@ -776,7 +785,7 @@ a,
   position: absolute;
   background: transparent;
   border: none;
-  overflow: hidden;
+  overflow: scroll;
   top: 50%;
   right: 1px;
   width: 42px;
@@ -878,7 +887,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, ol, ul, blockquote {
-  margin: 0 0 20px;
+  margin:  0 20px;
 }
 
 blockquote {
@@ -1005,7 +1014,7 @@ General Styles - FlexSlider
   width: 50%;
   top: 0;
   z-index: 10;
-  overflow: hidden;
+  overflow: scroll;
   opacity: 0;
   margin: 0;
 }
@@ -1508,6 +1517,7 @@ General Styles - Owlcarousel
 --------------------------------------------------------------*/
 .footer {
   padding: 10px 0;
+  position: static;
 }
 
 .footer .copyright {
@@ -1611,7 +1621,7 @@ Google map
 
 .team-image {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .team-image img {
@@ -1899,17 +1909,17 @@ Google map
 .work-item > a {
   position: relative;
   display: block;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .work-image {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .work-image img {
   display: block;
-  overflow: hidden;
+  overflow: scroll;
   width: 100%;
 }
 
@@ -1931,7 +1941,7 @@ Google map
   bottom: 100%;
   left: 0;
   text-align: center;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .work-title {
@@ -2081,7 +2091,7 @@ Google map
 
 .gallery-image {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .gallery-image a.gallery {
@@ -2091,7 +2101,7 @@ Google map
 
 .gallery-image img {
   display: block;
-  overflow: hidden;
+  overflow: scroll;
   width: 100%;
 }
 
@@ -2248,7 +2258,7 @@ Google map
 --------------------------------------------------------------*/
 /* Progress bars */
 .progress {
-  overflow: visible;
+  overflow: scroll;
   height: 4px;
 }
 
@@ -2488,7 +2498,7 @@ Google map
 
 .shop-item-image {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .shop-item-image img {
@@ -2615,7 +2625,7 @@ Google map
   border-radius: 6px;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  overflow: hidden;
+  overflow: scroll;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
   margin-bottom: 15px;
   transition: 0.35s ease-out;
