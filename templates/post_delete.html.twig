@@ -27,15 +27,15 @@
                 </div>
                 <div >
                     <p><b>Are you sure you want to delete this post?</b></p>
-                    <button onclick="window.location.href = '/'">Cancel</button>
+                    <button onclick="window.location.href = '/newposts'">Cancel</button>
 
                     <form method="post"  style="display: inline;">
                         <input type="hidden" name="confirmed" value="true">
                         <input type="submit" value="Delete">
                     </form>
                     <div>
-                        <p>Title: {{post.title}}</p>
-                        <p>Date Posted: {{post.datePosted}}</p>
+                        <p>Title: {{p.title}}</p>
+                        <p>Date Posted: {{p.datePosted}}</p>
 
                     </div>
 

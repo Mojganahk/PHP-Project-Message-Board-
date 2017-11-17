@@ -71,9 +71,9 @@ $twig->addGlobal('userSession', $_SESSION['user']);
 //index
 
 
-$app->get('/session', function() {
-    print_r($_SESSION);
-});
+//$app->get('/session', function() {
+//    print_r($_SESSION);
+//});
 
 
 //--------------------------------------Post starts--------------------------------------
@@ -255,8 +255,6 @@ $app->get('/posts(/:page)', function($page = 1) use ($app) {
     }
     $skip = ($page - 1) * $perPage;
     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
-  
-      // $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
     $app->render('newposts.html.twig', array(
         "postsList" => $postList,
         "maxPages" => $maxPages
@@ -275,15 +273,15 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-   
-     $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d ", $skip, $perPage);
-   
+    $postList = DB::query("SELECT posts.title, posts.body, posts.datePosted, users.name, users.avatarPath, categories.categoryName FROM posts INNER JOIN users ON posts.authorId = users.id INNER JOIN categories ON posts.catId = categories.id ORDER BY posts.id LIMIT %d,%d", $skip, $perPage);
     $app->render('newposts.html.twig', array(
         "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
     ));
-});
+   })->conditions(array(
+    'page' => '\d+'
+));
 // posts pagination usinx AJAX - just the table of post
 $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
     $perPage = 3;
@@ -325,6 +323,7 @@ $app->get('/categories', function() use ($app) {
 //    $app->render('/newposts.html.twig', array('list' => $postList));
 //});
 ////-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
+<<<<<<< HEAD
 
 
 //-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
@@ -339,6 +338,9 @@ $app->get('/posts', function() use ($app) {
 });
 //-------------------------------------------------- POST LIST ENDS ---------------------------------------------------------
 
+=======
+
+>>>>>>> 56a3096bf23d83b3b86d524e90116a1173136504
 
 
 
