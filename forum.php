@@ -273,14 +273,14 @@ $app->get('/newposts(/:page)', function($page = 1) use ($app) {
         return;
     }
     $skip = ($page - 1) * $perPage;
-    $postList = DB::query("SELECT * FROM posts ORDER BY id LIMIT %d,%d", $skip, $perPage);
+    $postList = DB::query("SELECT posts.title, posts.body, posts.datePosted, users.name, users.avatarPath, categories.categoryName FROM posts INNER JOIN users ON posts.authorId = users.id INNER JOIN categories ON posts.catId = categories.id ORDER BY posts.id LIMIT %d,%d", $skip, $perPage);
     $app->render('newposts.html.twig', array(
         "postList" => $postList,
         "maxPages" => $maxPages,
         "currentPage" => $page
     ));
- })->conditions(array(
-    'page' => '\d+'   
+   })->conditions(array(
+    'page' => '\d+'
 ));
 // posts pagination usinx AJAX - just the table of post
 $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
