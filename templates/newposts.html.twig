@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-md-8 col-lg-9">
-                             {% block UserIDentification %}
+                        {% block UserIDentification %}
 
                             {% if userSession %}
                                 <p>Hello {{ userSession.name }}, You are Logged in.
@@ -33,51 +33,51 @@
                                 {% endif %}
 
                         {% endblock %}
-                        
-                    
-                                    
-                                
-                  <div class="col-md-12 post">
-                      
-                      {% for p in postList %}
-                    <div class="row">
-                        
-                        <div class="col-md-12">
-                             
-                            <h4>
-                                <strong><a href="/uploads.social.jpg" class="post-title">{{p.title}}</a></strong></h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 post-header-line">
-                            
-                            <span class="glyphicon glyphicon-user"></span>by <a href="/login">{{p.authorId}}</a> | <span class="glyphicon glyphicon-calendar">
-                            </span>{{p.datePosted}} | <span class="glyphicon glyphicon-tags">
-                                </span>Category : <a href="/categories"><span class="label label-info">{{p.catId}}</span></a>
-                        </div>
-                    </div>
-                    <div class="row post-content">
-                        <div class="col-md-3">
-                            <a href="#">
-                                <img src="/uploads.social.jpg" alt="" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="col-md-9">
-                            <p>
-                               {{p.body}}
-                            </p>
-                           
-                        </div>
-                    </div>
-                            {% endfor %}
-                             <div class="paginationContainer">
-                                    {% for page in range(1,maxPages) %}
-                                        <button class="{% if page == currentPage %}currentPageButton{% endif %}"
-                                                id="btPage{{page}}" onclick="loadPage({{page}});">{{page}}</button>
-                                    {% endfor %}
+
+
+
+
+                        <div class="col-md-12 post">
+
+                            {% for p in postList %}
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        <h4>
+                                            <strong><a href="/uploads.social.jpg" class="post-title">{{p.title}}</a></strong></h4>
+                                    </div>
                                 </div>
-                </div>
-                   
+                                <div class="row">
+                                    <div class="col-md-12 post-header-line">
+
+                                        <span class="glyphicon glyphicon-user"></span>by <a href="/login">{{p.authorId}}</a> | <span class="glyphicon glyphicon-calendar">
+                                        </span>{{p.datePosted}} | <span class="glyphicon glyphicon-tags">
+                                        </span>Category : <a href="/categories"><span class="label label-info">{{p.catId}}</span></a>
+                                    </div>
+                                </div>
+                                <div class="row post-content">
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="/uploads.social.jpg" alt="" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>
+                                            {{p.body}}
+                                        </p>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="paginationContainer">
+                                {% for page in range(1,maxPages) %}
+                                    <button class="{% if page == currentPage %}currentPageButton{% endif %}"
+                                            id="btPage{{page}}" onclick="loadPage({{page}});">{{page}}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
