@@ -6,11 +6,12 @@
     <script>
         var currentPage = {{currentPage}};
                 function loadPage(page) {
+                    console.log("loadPage " + page);
                     $('#btPage' + currentPage).removeClass("currentPageButton");
                     currentPage = page;
                     $('#btPage' + currentPage).addClass("currentPageButton");
                     $('#itemsView').load("/ajax/newposts/" + page);
-                    window.history.pushState("", "Post list", "/newposts/" + page);
+                    // window.history.pushState("", "Post list", "/newposts/" + page);
                 }
     </script>
 {% endblock %}
@@ -38,6 +39,7 @@
 
 
                         <div class="col-md-12 post">
+                            <div id="itemsView">
 
                             {% for p in postList %}
                                 <div class="row">
@@ -50,8 +52,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 post-header-line">
-
-                                        <span class="glyphicon glyphicon-user"></span>by <a href="/login">{{p.name}}</a> | <span class="glyphicon glyphicon-calendar">
+                                        <img style="float: left;" src="{{p['avatarPath']}}" width="50">
+                                        <span></span> by <a href="/login">{{p.name}}</a> | <span class="glyphicon glyphicon-calendar">
                                         </span>{{p.datePosted}} | <span class="glyphicon glyphicon-tags">
                                         </span>Category : <a href="/categories"><span class="label label-info">{{p.categoryName}}</span></a>
                                     </div>
@@ -70,10 +72,11 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                        </div>
                             <div class="paginationContainer">
                                 {% for page in range(1,maxPages) %}
                                     <button class="{% if page == currentPage %}currentPageButton{% endif %}"
-                                            id="btPage{{page}}" onclick="loadPage({{page}});">{{page}}</button>
+                                            id="btPage{{page}}" onClick="loadPage({{page}});">{{page}}</button>
                                 {% endfor %}
                             </div>
                         </div>
