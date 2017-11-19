@@ -8,26 +8,26 @@
             <div class="container">
 
                 
-                    <div class="callout-text font-alt">
-                        <h4 style="margin-top: 0px; ">
+                              <div class=" col-sm-4 col-md-9 col-lg-12">
+                <div class="callout-text font-alt">
 
                          
-                                <p><a href="/admin/categories/add">Add category</a></p>
+                                <h4><a href="/admin/categories/add">Add category</a></h4>
 
                                 <div >
 
                                     {% for c in list %}
                                         <div >
                                             <div >
-                                                <div class="col-xs-6 col-md-4">
-                                                    <p>{{loop.index}}</p>
-                                                    <h4>{{c.categoryName}}</h4>
-                                                    <p>{{c.description}}</p>
-                                                    <p><img class="center-block" src="{{c.imagePath}}" width="200" height="200"></p>
+                                              <div class="col-xs-12 col-md-4">
+                                                    <p>{{loop.index}}</p><h6>{{c.categoryName}}</h6>  
                                                     <p>
                                                         <a href="/admin/categories/delete/{{c.id}}">Delete</a>
                                                         <a href="/admin/categories/edit/{{c.id}}">Edit</a>
                                                     </p>
+                                                      <p>{{c.description}}</p>
+                                                    <p><img class="center-block" src="{{c.imagePath}}" width="100" height="100"></p>
+                                              
                                                 </div>
                                             </div>
                                         </div>
@@ -42,7 +42,7 @@
                                     {% endfor %}
 
                                 </div>
-                                           
+                           </div>                 
                 </div>
             </div>
 
