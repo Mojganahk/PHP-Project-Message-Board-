@@ -888,6 +888,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p, ol, ul, blockquote {
   margin:  0 20px;
+  text-align: justify;
 }
 
 blockquote {
@@ -2166,8 +2167,8 @@ Google map
 
 .post-title {
   line-height: 1.4;
-  font-size: 22px;
-  color: #111;
+  font-size: 18px;
+  color: #5bc0de;
   margin: 0;
 }
 
@@ -2956,7 +2957,7 @@ body {background: #EAEAEA;}
   
   /*post for newposts */
   .post { border-bottom:1px solid #DDD }
-.post-title {  color:#662D91; }
+.post-title {  color:#5bc0de; }
 .post .glyphicon { margin-right:5px; }
 .post-header-line { border-top:1px solid #DDD;border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
 .post-content { padding-bottom: 15px;padding-top: 15px;}
