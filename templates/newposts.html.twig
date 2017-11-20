@@ -22,7 +22,7 @@
         <section class="module-extra-small bg-dark">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="col-sm-6 col-md-8 col-lg-12">
                         {% block UserIDentification %}
 
                             {% if userSession %}
@@ -46,14 +46,15 @@
 
                                     <div class="col-md-12">
 
-                                        <h4>
-                                            <strong><a href="/uploads.social.jpg" class="post-title">{{p.title}}</a></strong></h4>
+                                     
+                                        <strong> <p class="post-title">{{p.title}}</p></strong>
                                     </div>
                                 </div>
                                 <div class="row">
+                                   
                                     <div class="col-md-12 post-header-line">
-                                        <img style="float: left;" src="{{p['avatarPath']}}" width="50">
-                                        <span></span> by <a href="/login">{{p.name}}</a> | <span class="glyphicon glyphicon-calendar">
+                                     <span>    <img style="float: left;" src="{{p['avatarPath']}}" width="40" title="Profile Picture" class="img-circle">
+                                        </span> by <a href="/login">{{p.name}}</a> | <span class="glyphicon glyphicon-calendar">
                                         </span>{{p.datePosted}} | <span class="glyphicon glyphicon-tags">
                                         </span>Category : <a href="/categories"><span class="label label-info">{{p.categoryName}}</span></a>
                                     </div>
@@ -74,6 +75,7 @@
                             {% endfor %}
                         </div>
                             <div class="paginationContainer">
+                                
                                 {% for page in range(1,maxPages) %}
                                     <button class="{% if page == currentPage %}currentPageButton{% endif %}"
                                             id="btPage{{page}}" onClick="loadPage({{page}});">{{page}}</button>

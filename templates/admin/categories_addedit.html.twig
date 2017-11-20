@@ -7,13 +7,10 @@
         <section class="module-extra-small bg-dark">
             <div class="container">
 
-                <div class="col-sm-6 col-md-8 col-lg-9">
-                    <div class="callout-text font-alt">
-                        <h4 style="margin-top: 0px; ">
+           
 
-                            <div class="row">
-                               
-                            </div>
+                             <div class=" col-sm-4 col-md-4 col-lg-4">
+                <div class="callout-text font-alt">
                             <div>
                                 {% if errorList %}
                                     <ul>
@@ -24,11 +21,11 @@
                                 {% endif %}
                                 <form method="post" enctype="multipart/form-data">
 
-                                    Name: <input type="text" name="categoryName" value="{{v.categoryName}}"><br><br>
-                                    Description: <textarea name="description">{{v.description}}</textarea><br><br>
-                                    <input type="file" name="categoryImage"><br>
-                                    <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
-                                    <input type="submit" value="Cancel">
+                                    Name: <input  class="form-control" type="text" name="categoryName" value="{{v.categoryName}}"><br><br>
+                                    Description: <textarea class="form-control" row="7" name="description">{{v.description}}</textarea><br><br>
+                                    <input   class="btn btn-border-w btn-round" type="file" name="categoryImage"><br>
+                                    <input class="btn btn-border-w btn-round" type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} category">
+                                    <input class="btn btn-border-w btn-round" type="submit" value="Cancel">
                                 </form>
 
                             </div>
