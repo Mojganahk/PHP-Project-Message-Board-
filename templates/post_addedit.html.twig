@@ -1,11 +1,7 @@
 {% extends "master.html.twig" %}
 
 {% block title %}New Post{% endblock %}
-{#  {% block headextra %} 
-  <script type="text/javascript">
-  $("#isDone").val("<?php echo $_POST['isDone'];?>");
-  </script>
-  {% endblock %} #}
+
 
 
 
@@ -17,19 +13,41 @@
                 <div class="row">
 
 
-                    {% block UserIDentification %}
-
-                        {% if userSession %}
-                            <p>Hello {{ userSession.name }}, You are Logged in.
-                                You may <a href="/logout">logout</a></p>
-                            {% else %}
-                            <p>You're not logged in. You may <a href="/register">Register</a>
-                                or <a href="/login">Login</a>.</p>
-                            {% endif %}
-
-                    {% endblock %}
                 </div>
-                <div >
+                
+                <!---user photo -->
+                    
+                              <div class="user-info-block">
+                            <div class="user-heading">
+                                <h2>{{ userSession.name }}</h2>
+                                <span class="help-block" href="../mailto:name@email.com">{{ userSession.email }}</span>
+                           
+                            <ul class="navigation">
+                                <li class="active">
+                                    <a data-toggle="tab" href="../mailto:name@email.com" title="Email">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="../newposts" title="Posts">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </a>
+
+                                </li>
+
+                                <li>
+                                    <a data-toggle="tab" href="../categories" title="Categories">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                     </div>
+                        </div>
+                        
+                      
+                <!---user photo ends -->
+                
+                        <div class=" col-sm-4 col-md-6 col-lg-6">
                     <h4 class="font-alt">Add Post</h4>
 
 
@@ -48,9 +66,9 @@
                                 {%endfor %}
                             </select><br> 
                             Title: <input class="form-control" type="text" name="title" value="{{v.title}}"><br>
-                            Body: <textarea cols="20" class="form-control" name="body">{{v.body}}</textarea><br>             
+                            Body: <textarea class="form-control" row="7" name="body">{{v.body}}</textarea><br>             
                        
-                            <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} post">
+                            <input class="btn btn-border-w btn-round" type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} post">
                         </form>
                     </div>
 

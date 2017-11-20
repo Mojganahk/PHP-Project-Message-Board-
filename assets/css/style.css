@@ -15,7 +15,7 @@ html {
 
 
 body {
-  background: red;
+  background: black;
   font: 400 12px/1.8 "Open Sans", sans-serif;
   color: #666;
   -webkit-font-smoothing: antialiased;
@@ -167,7 +167,7 @@ a,
   position: relative;
   background-color: #fff;
   z-index: 1;
-  height: 850px;
+ 
 }
 
 .module,
@@ -1250,7 +1250,8 @@ General Styles - Owlcarousel
 	Navbar
 --------------------------------------------------------------*/
 .navbar-custom {
-  background-color: rgba(10, 10, 10, 0.9);
+  background-color: black;
+  height:65px;
   border: 0;
   border-radius: 0;
   z-index: 1000;
@@ -2251,7 +2252,7 @@ Google map
 }
 
 .pagination a.active {
-  border-color: #CACACA;
+  border-color: red;
 }
 
 /*--------------------------------------------------------------
@@ -2710,7 +2711,7 @@ Google map
 --------------------------------------------------------------*/
 @media (min-width: 768px) {
   .navbar-transparent {
-    background: transparent;
+    
     padding-bottom: 15px;
     padding-top: 15px;
   }
@@ -2758,6 +2759,8 @@ Google map
   /* Navbar */
   .navbar-custom {
     letter-spacing: 1px;
+    background-color: black;
+  
   }
 }
 
@@ -2765,6 +2768,8 @@ Google map
   /* Navbar */
   .navbar-custom {
     letter-spacing: 0;
+    background-color:black;
+
   }
   /* Headers */
   .titan-title-size-3 {
@@ -2947,13 +2952,14 @@ body {background: #EAEAEA;}
 
 .user-details .user-info-block {width: 100%; height: 100px; position: absolute;  background:lightgray; z-index: 0;}
  .user-info-block .user-heading {width: 100%; text-align: center; margin: 10px 0 0;}
- .user-info-block .navigation { text-align: center; background:whitesmoke; float: left; width: 100%; margin: 0; padding: 0; list-style: none; border-bottom: 1px solid #428BCA; border-top: 1px solid #428BCA;}
+ .user-info-block .navigation { text-align: center;  float: left; width: 100%; margin: 0; padding: 0; list-style: none; border-bottom: 1px solid #5bc0de; }
   .navigation li {float: left; margin: 0; padding: 0;}
    .navigation li a {padding: 20px 30px; float: left;}
-   .navigation li.active a {background: #428BCA; color: #fff;}
+   .navigation li.active a {background: #5bc0de; color: #fff;}
  .user-info-block .user-body {float: left; padding: 5%; width: 90%;}
   .user-body .tab-content > div { text-align: center; float: left; width: 100%;}
   .user-body .tab-content h4 {text-align: center;width: 100%; margin: 10px 0; color: #333;}
+
   
   /*post for newposts */
   .post { border-bottom:1px solid #DDD }
@@ -2961,3 +2967,5 @@ body {background: #EAEAEA;}
 .post .glyphicon { margin-right:5px; }
 .post-header-line { border-top:1px solid #DDD;border-bottom:1px solid #DDD;padding:5px 0px 5px 15px;font-size: 12px; }
 .post-content { padding-bottom: 15px;padding-top: 15px;}
+
+
