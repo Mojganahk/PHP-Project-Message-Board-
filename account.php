@@ -8,12 +8,10 @@ if (false) {
 
 
 //------------------------------------Register starts-----------------------------------------
-
 //REGISTRATION FIRST SHOW
 $app->get('/register', function() use($app) {
     $app->render('register.html.twig');
 });
-//
 //REGISTRATION SUBMISSION
 $app->post('/register', function() use ($app, $log) {
 //extract submission
@@ -23,12 +21,10 @@ $app->post('/register', function() use ($app, $log) {
     $pass2 = $app->request()->post('pass2');
     $values = array('name' => $name, 'email' => $email);
     $errorList = array();
-//
     if (strlen($name) < 2 || strlen($name) > 50) {
         array_push($errorList, "Name must be between 2 and 50 characters.");
         $value['name'] = '';
     }
-//
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
         array_push($errorList, "Email must look like a valid email.");
         $values['email'] = '';
@@ -39,7 +35,6 @@ $app->post('/register', function() use ($app, $log) {
             $values['email'] = '';
         }
     }
-//
     if ($pass1 != $pass2) {
         array_push($errorList, "Passwords don't match");
     } else {
@@ -47,12 +42,10 @@ $app->post('/register', function() use ($app, $log) {
             array_push($errorList, "Password must be between 2 and 50");
         }
     }
-//
 //password pattern check
     if (!preg_match('/[a-z]/', $pass1) || !preg_match('/[a-z]/', $pass1) || !preg_match('/[0-9' . preg_quote("!@#\$%^&*()_-+={}[],.<>;:'\"~`") . ']/', $pass1)) {
         array_push($errorList, "Password must have at least one lowercase, one uppercase, and one number.");
     }
-//
     //POST IMAGE CHECK
     $avatar = array();
     if ($_FILES['avatar']['error'] != UPLOAD_ERR_NO_FILE) {
@@ -89,8 +82,6 @@ $app->post('/register', function() use ($app, $log) {
     } else { //no file uploaded
         array_push($errorList, "Photo must be uploaded with new registration.");
     }
-
-
     if ($errorList) { // 3. failed submission
         $app->render('register.html.twig', array(
             'errorList' => $errorList,
@@ -263,7 +254,8 @@ $app->map('/passreset/token/:secretToken', function($secretToken) use ($app, $lo
                 'email' => $user['email']
             ));
         } else { // 2. successful submission
-            DB::update('users', array('password' => $pass1), 'id=%d', $user['id']);
+            $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
+            DB::update('users', array('password' => $passEnc), 'id=%d', $user['id']);
             $app->render('passreset_form_success.html.twig');
         }
     }

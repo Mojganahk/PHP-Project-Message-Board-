@@ -109,7 +109,7 @@ $app->get('/user/:id', function($id = -1) use($app) {
 //to display list with user's name
         $postList = DB::query("SELECT name, avatarPath, title, body, datePosted, categoryName FROM posts, users, categories WHERE posts.authorId=users.id AND posts.authorId=%i", $id);
 //to display the post without the user's name
-        $app->render('index.html.twig', array('list' => $postList));
+        $app->render('newposts.html.twig', array('list' => $postList));
     }
 })->conditions(array(
     'id' => '\d+'
@@ -306,17 +306,13 @@ $app->get('/ajax/newposts(/:page)', function($page = 1) use ($app) {
 
 //-------------------------------------------------- CATEGORY LIST STARTS ---------------------------------------------------------
 $app->get('/categories', function() use ($app) {
-    if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
-        return;
-    }
-    //
+    
     $categoriesList = DB::query("SELECT categoryName, description, imagePath FROM categories");
     $app->render('/categories.html.twig', array('list' => $categoriesList));
 });
 //-------------------------------------------------- CATEGORY LIST ENDS ---------------------------------------------------------
 //-------------------------------------------------- POST LIST STARTS ---------------------------------------------------------
-//$app->get('/posts', function() use ($app) {
+//$app->get('/newposts', function() use ($app) {
 //    if (!$_SESSION['user']) {
 //        $app->render('access_denied.html.twig');
 //        return;
