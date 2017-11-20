@@ -588,13 +588,13 @@ a,
   line-height: 28px;
   font-size: 14px;
   color: #000;
-  opacity: 0.6;
+  
   border-radius: 2px;
 }
 
 .scroll-up a:hover,
 .scroll-up a:active {
-  opacity: 1;
+ 
   color: #000;
 }
 
@@ -1016,18 +1016,18 @@ General Styles - FlexSlider
   top: 0;
   z-index: 10;
   overflow: scroll;
-  opacity: 0;
+
   margin: 0;
 }
 
 .flex-direction-nav .flex-prev {
-  opacity: 0;
+  
   left: 0;
   cursor: url(../images/prev-light.png), e-resize;
 }
 
 .flex-direction-nav .flex-next {
-  opacity: 0;
+
   right: 0;
   cursor: url(../images/next-light.png), e-resize;
 }
@@ -1050,7 +1050,7 @@ General Styles - FlexSlider
 }
 
 .flex-control-nav > li > a {
-  background: transparent;
+  background: black;
   border: 1px solid #fff;
   display: block;
   height: 6px;
@@ -1415,7 +1415,7 @@ General Styles - Owlcarousel
 
 /* Agency Page Header */
 .agency-page-header:before {
-  background: transparent;
+  background: black;
 }
 
 /* About us Page Header */
@@ -1623,7 +1623,7 @@ Google map
 
 .team-image {
   position: relative;
-  overflow: scroll;
+
 }
 
 .team-image img {
@@ -2719,7 +2719,7 @@ Google map
     position: absolute;
     display: block;
     visibility: hidden;
-    opacity: 0;
+    
   }
   .navbar-custom .open > .dropdown-menu {
     visibility: visible;
