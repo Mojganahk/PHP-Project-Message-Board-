@@ -175,6 +175,7 @@ a,
   position: relative;
   padding: 140px 0;
   background-repeat: no-repeat;
+  background-color: darkgray;
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -1277,7 +1278,7 @@ General Styles - Owlcarousel
 .navbar-custom .navbar-brand {
   letter-spacing: 4px;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
   color: #fff;
 }
 
@@ -1684,7 +1685,7 @@ Google map
 
 .team-role {
   font-size: 11px;
-  color: #aaa;
+  color: white;
 }
 
 .team-item:hover .team-image:after {
